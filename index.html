@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 50px;
+                padding-bottom: 20px;
+            }
+        </style>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+
+      <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/main.css">
+      <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+
+      <script type="text/javascript" src="js/vendor/handlebars.js"></script>
+      <script src="maps/nc_sldu13_orig.json"></script>
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+
+
+    <div class="container">
+    <div class="row">
+      <h2>North Carolina League of Conservation Voters  <br><small>State Senate Scorecard Map</small></h2>
+    </div>
+    <div class="row">
+      <div id="main" class="col-md-9">
+        <div id="map"></div>
+      </div>
+      <div id="sidebar" class="col-md-3"></div>
+    </div>
+    <div class="row">
+      <div id="content"></div>
+    </div>
+    </div><!-- /container -->
+
+
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/main.js"></script>
+
+    <script type="text/javascript" src="js/vendor/tabletop.js"></script>
+    <script type="text/javascript">
+      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html';
+      var geo;
+      var NCSenateDistricts = {};
+      var app = {};
+
+      function clearInfobox() {
+        sidebar.html(' ');
+        sidebar.attr("class", "col-md-3")
+      }
+      $(document).ready( function() {
+        Tabletop.init( { key: public_spreadsheet_url,
+          callback: showInfo,
+          parseNumbers: true } );
+      });
+
+      function showInfo(data, tabletop) {
+        var source   = $("#senate-template").html();
+        var template = Handlebars.compile(source);
+        var sourcebox = $("#senate-template-infobox").html();
+        app.infoboxTemplate = Handlebars.compile(sourcebox);
+        $.each( tabletop.sheets("Sheet1").all(), function(i, member) {
+          var html = template(member);
+          $("#content").append(html);
+          NCSenateDistricts[member.district] = member;
+        });
+        console.log(NCSenateDistricts)
+
+        loadGeo();
+//          processJSON(tabletop.sheets("Sheet1").all());
+      }
+
+      function loadGeo() {
+
+        var latitude = 35.2;
+        var longitude = -79.75;
+        var latLng = new L.LatLng(latitude, longitude);
+        var map = L.map('map').setView(latLng, 7);
+
+        var stateLayer = L.geoJson(geosenate, {
+        //  onEachFeature:onEachFeature,
+          style: {
+            fillColor: 'white',
+            weight: 1,
+            opacity: 0.51,
+            color: '#333333',
+            dashArray: '0',
+            fillOpacity: 0.7
+          }
+        });
+        console.log(stateLayer);
+
+        stateLayer.addTo(map);
+
+//
+//        L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
+//          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://cloudmade.com">CloudMade</a>',
+//          key: '4733d063f9704b1c940a64459b1263e9',
+//          styleId: 96931,
+//          maxZoom: 18
+//        }).addTo(map);
+
+        console.log('hi!')
+      }
+      </script>
+
+
+
+
+
+
+
+
+
+        <script id="senate-template" type="text/x-handlebars-template">
+          <div class="entry">
+            <div class="body">
+              <strong>District {{{district}}}</strong><br>
+              {{{fullname}}} ({{{party}}})<br>
+              {{#if phone}}{{{phone}}}<br>{{/if}}
+              Counties: <em>{{{countiesrepresented}}}</em><br>
+              Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
+              2013 Score: <strong>{{{score2013}}}</strong><br>
+              {{{notes}}}<br>
+              {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
+            </div>
+          </div>
+        </script>
+
+        <script id="senate-template-infobox" type="text/x-handlebars-template">
+          <div class="entry" style="padding-top:12px;">
+            <div class="body">
+              <button type='button' id='close' class='close'>x</button><br>
+
+              <strong>                {{{fullname}}} ({{{party}}})</strong><br>
+              District {{{district}}}<br>
+              {{#if phone}}{{{phone}}}<br>{{/if}}
+              Counties: <em>{{{countiesrepresented}}}</em><br>
+              Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
+              2013 Score: <strong>{{{score2013}}}</strong><br>
+              {{{notes}}}<br>
+              {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
+            </div>
+          </div>
+        </script> <!-- /container -->
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+    </body>
+</html>
