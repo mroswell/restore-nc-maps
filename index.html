@@ -68,6 +68,7 @@
       var geo;
       var NCSenateDistricts = {};
       var app = {};
+      var senateLayer;
 
       function clearInfobox() {
         sidebar.html(' ');
@@ -101,7 +102,7 @@
         var longitude = -79.75;
         var latLng = new L.LatLng(latitude, longitude);
         var map = L.map('map').setView(latLng, 7);
-        var senateLayer = L.geoJson(geosenate, {
+        senateLayer = L.geoJson(geosenate, {
           onEachFeature:onEachFeature,
           style: {
             fillColor: 'white',
@@ -202,11 +203,31 @@
         });
       }
 
-      function highlightFeature () {
-        console.log("highlight")
+//      function highlightFeature () {
+//        console.log("highlight")
+//      }
+
+      function highlightFeature(e) {
+        var layer = e.target;
+
+        layer.setStyle({
+          weight: 5,
+          color: '#666',
+          dashArray: '',
+          fillOpacity: 0.7
+        });
+
+        if (!L.Browser.ie && !L.Browser.opera) {
+          layer.bringToFront();
+        }
       }
-      function resetHighlight() {
-        console.log("reset")
+//      function resetHighlight() {
+//        console.log("reset")
+//      }
+
+      function resetHighlight(e) {
+        var layer = e.target
+        senateLayer.resetStyle(e.target);
       }
       function mapMemberDetail () {
         console.log("mapMemberDetails")
