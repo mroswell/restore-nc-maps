@@ -65,7 +65,7 @@
     <script type="text/javascript" src="js/vendor/tabletop.js"></script>
     <script type="text/javascript">
       var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html';
-      var geo;
+      var dist;
       var NCSenateDistricts = {};
       var app = {};
       var senateLayer;
@@ -113,66 +113,16 @@
             fillOpacity: 0.7
           }
       });
-        // console.log(senateLayer);
-        // console.log(parseInt(geosenate.features.properties.SLDUST,10));
 
-
-//        var members = committee.results[0].members;
-//        var states = {};
-//        var districtName = {};
-//        for (var i = 0; i < members.length; i++) {
-//          var member = members[i].legislator;
-
-//good//        console.log(NCSenateDistricts);
-//good//        console.log(geosenate);
-//        console.log(parseInt(geosenate.features[0].properties.SLDUST));
-
-//        for(var i in NCSenateDistricts) {
-//          console.log(NCSenateDistricts[i].fullname);
-//        }
-//
-//        for (var j in geosenate) {
-//          if (j=== 'features') {
-//          console.log("geosenate features", geosenate[j]);
-//          }
-//        }
           for (var k = 0; k < geosenate.features.length; k++) {
             console.log('k', k);
             console.log(geosenate.features[k].properties.SLDUST);
-            var dist = parseInt(geosenate.features[k].properties.SLDUST);
+            dist = parseInt(geosenate.features[k].properties.SLDUST);
             senateLayer.setStyle(function(shape) {
-              return getColor(dist);
+              return getColor(dist, shape);
               });
-//           for (a in k) {
-//             console.log(a.typeof);
-//              console.log('a', a);
-
             }
-//          }
- //         console.log(i.properties);
-//          if (i == 'features') {
-//            for (var j in i)
-//           // console.log(geosenate.features.j);
-//            console.log()
-////          console.log('geosenate' +i)
-//       //     for (j in geosenate[features]) {
-//       //       console.log(j);
-//        //}
-//        }
-    //    }
-//        senateLayer.setStyle(function(shape) {
-//            var abbreviation = stateName2Abbrev[stateFips2Name[shape.properties.STATE]];
-//            var district = parseInt(shape.properties.CD, 10);  //04 GeoJSON; 4 Congress API
-//            var match = states[abbreviation+district];
-//          var match = states[shape.properties.DISTRICT];
 
-//          return colorDistrict(match,'house');
-//        });
-
-//        for (var i = 0; i < NCSenateDistricts.length; i++) {
-//         console.log("you are here.")
-////          console.log(NCSenateDistricts[i].fullname);
-//        }
 
         senateLayer.addTo(map);
 
@@ -203,9 +153,7 @@
         });
       }
 
-//      function highlightFeature () {
-//        console.log("highlight")
-//      }
+
 
       function highlightFeature(e) {
         var layer = e.target;
@@ -221,12 +169,9 @@
           layer.bringToFront();
         }
       }
-//      function resetHighlight() {
-//        console.log("reset")
-//      }
 
       function resetHighlight(e) {
-        var layer = e.target
+        var layer = e.target;
         senateLayer.resetStyle(e.target);
       }
       function mapMemberDetail () {
@@ -234,7 +179,7 @@
       }
 
 
-      function getColor(dist) {
+      function getColor(dist, feature) {
         return dist > 1000 ? '#800026' :
            dist > 50  ? '#BD0026' :
            dist > 20  ? '#E31A1C' :
