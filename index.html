@@ -89,21 +89,20 @@
           $("#content").append(html);
           NCSenateDistricts[member.district] = member;
         });
-        console.log(NCSenateDistricts)
+
 
         loadGeo();
 //          processJSON(tabletop.sheets("Sheet1").all());
       }
 
-      function loadGeo() {
+      function loadGeo(district) {
 
         var latitude = 35.2;
         var longitude = -79.75;
         var latLng = new L.LatLng(latitude, longitude);
         var map = L.map('map').setView(latLng, 7);
-
-        var stateLayer = L.geoJson(geosenate, {
-        //  onEachFeature:onEachFeature,
+        var senateLayer = L.geoJson(geosenate, {
+          onEachFeature:onEachFeature,
           style: {
             fillColor: 'white',
             weight: 1,
@@ -112,10 +111,77 @@
             dashArray: '0',
             fillOpacity: 0.7
           }
-        });
-        console.log(stateLayer);
+      });
+        // console.log(senateLayer);
+        // console.log(parseInt(geosenate.features.properties.SLDUST,10));
 
-        stateLayer.addTo(map);
+
+//        var members = committee.results[0].members;
+//        var states = {};
+//        var districtName = {};
+//        for (var i = 0; i < members.length; i++) {
+//          var member = members[i].legislator;
+
+//good//        console.log(NCSenateDistricts);
+//good//        console.log(geosenate);
+//        console.log(parseInt(geosenate.features[0].properties.SLDUST));
+
+//        for(var i in NCSenateDistricts) {
+//          console.log(NCSenateDistricts[i].fullname);
+//        }
+//
+//        for (var j in geosenate) {
+//          if (j=== 'features') {
+//          console.log("geosenate features", geosenate[j]);
+//          }
+//        }
+          for (var k = 0; k < geosenate.features.length; k++) {
+            console.log('k', k);
+            console.log(geosenate.features[k].properties.SLDUST);
+            var dist = parseInt(geosenate.features[k].properties.SLDUST);
+            senateLayer.setStyle(function(shape) {
+              return getColor(dist);
+              });
+//           for (a in k) {
+//             console.log(a.typeof);
+//              console.log('a', a);
+
+            }
+//          }
+ //         console.log(i.properties);
+//          if (i == 'features') {
+//            for (var j in i)
+//           // console.log(geosenate.features.j);
+//            console.log()
+////          console.log('geosenate' +i)
+//       //     for (j in geosenate[features]) {
+//       //       console.log(j);
+//        //}
+//        }
+    //    }
+//        senateLayer.setStyle(function(shape) {
+//            var abbreviation = stateName2Abbrev[stateFips2Name[shape.properties.STATE]];
+//            var district = parseInt(shape.properties.CD, 10);  //04 GeoJSON; 4 Congress API
+//            var match = states[abbreviation+district];
+//          var match = states[shape.properties.DISTRICT];
+
+//          return colorDistrict(match,'house');
+//        });
+
+//        for (var i = 0; i < NCSenateDistricts.length; i++) {
+//         console.log("you are here.")
+////          console.log(NCSenateDistricts[i].fullname);
+//        }
+
+        senateLayer.addTo(map);
+
+
+//      .q0-6{fill:rgb(255,0,0)}
+//      .q1-6{fill:#FC8400;}
+//      .q2-6{fill:#FDC300;}
+//      .q3-6{fill:#FEF200;}
+//      .q4-6{fill:#82e0c3;}
+//      .q5-6{fill:#4EAB07;}
 
 //
 //        L.tileLayer('http://{s}.tile.cloudmade.com/{key}/{styleId}/256/{z}/{x}/{y}.png', {
@@ -125,10 +191,40 @@
 //          maxZoom: 18
 //        }).addTo(map);
 
-        console.log('hi!')
-      }
-      </script>
 
+      }
+
+      function onEachFeature(feature, layer) {
+        layer.on({
+          mouseover: highlightFeature,
+          mouseout: resetHighlight,
+          click: mapMemberDetail
+        });
+      }
+
+      function highlightFeature () {
+        console.log("highlight")
+      }
+      function resetHighlight() {
+        console.log("reset")
+      }
+      function mapMemberDetail () {
+        console.log("mapMemberDetails")
+      }
+
+
+      function getColor(dist) {
+        return dist > 1000 ? '#800026' :
+           dist > 50  ? '#BD0026' :
+           dist > 20  ? '#E31A1C' :
+           dist > 10  ? '#FC4E2A' :
+           dist > 5   ? '#FD8D3C' :
+           dist > 2   ? '#FEB24C' :
+           dist > 0   ? '#FED976' :
+           '#FFEDA0';
+      }
+
+      </script>
 
 
 
