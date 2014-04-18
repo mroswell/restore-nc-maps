@@ -63,12 +63,16 @@
     <script src="js/main.js"></script>
 
     <script type="text/javascript" src="js/vendor/tabletop.js"></script>
+
     <script type="text/javascript">
       var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html';
       var dist;
       var NCSenateDistricts = {};
+      console.log('NCSenateDistricts', NCSenateDistricts);
       var app = {};
       var senateLayer;
+      var map;
+
 
       function clearInfobox() {
         sidebar.html(' ');
@@ -101,7 +105,7 @@
         var latitude = 35.2;
         var longitude = -79.75;
         var latLng = new L.LatLng(latitude, longitude);
-        var map = L.map('map').setView(latLng, 7);
+        map = L.map('map').setView(latLng, 7);
         senateLayer = L.geoJson(geosenate, {
           onEachFeature:onEachFeature,
           style: {
@@ -115,8 +119,8 @@
       });
 
           for (var k = 0; k < geosenate.features.length; k++) {
-            console.log('k', k);
-            console.log(geosenate.features[k].properties.SLDUST);
+//            console.log('k', k);
+//            console.log(geosenate.features[k].properties.SLDUST);
             dist = parseInt(geosenate.features[k].properties.SLDUST);
             senateLayer.setStyle(function(shape) {
               return getColor(dist, shape);
@@ -157,6 +161,7 @@
 
       function highlightFeature(e) {
         var layer = e.target;
+          console.log(layer);
 
         layer.setStyle({
           weight: 5,
@@ -168,14 +173,26 @@
         if (!L.Browser.ie && !L.Browser.opera) {
           layer.bringToFront();
         }
+        info.update(layer.feature.properties);
       }
 
       function resetHighlight(e) {
         var layer = e.target;
         senateLayer.resetStyle(e.target);
+          info.update();
       }
-      function mapMemberDetail () {
-        console.log("mapMemberDetails")
+
+
+      function mapMemberDetail(e) {
+          var boundary = e.target;
+          console.log(boundary.feature.properties.SLDUST);
+          var member = memberFromBoundary(boundary);
+//          memberDetailFunction(members);
+      }
+
+
+      function memberFromBoundary(){
+          console.log('memberfromBoundary')
       }
 
 
@@ -190,7 +207,24 @@
            '#FFEDA0';
       }
 
-      </script>
+
+
+      var info = L.control();
+
+      info.onAdd = function (map) {
+          this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+          this.update();
+          return this._div;
+      };
+      //      // method that we will use to update the control based on feature properties passed
+      info.update = function (props) {
+//          this._div.innerHTML = '<h4>Why won\'t this display</h4>'+  (props ?  '<b>' + props.SLDUST +'</b>'
+//                  : 'Hover over a state');
+      };
+      //
+      info.addTo(map);
+
+    </script>
 
 
 
