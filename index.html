@@ -71,7 +71,10 @@
       console.log('NCSenateDistricts', NCSenateDistricts);
       var app = {};
       var senateLayer;
-      var map;
+      var latitude = 35.2;
+      var longitude = -79.75;
+      var latLng = new L.LatLng(latitude, longitude);
+      var map = L.map('map').setView(latLng, 7);
 
 
       function clearInfobox() {
@@ -90,42 +93,49 @@
         var sourcebox = $("#senate-template-infobox").html();
         app.infoboxTemplate = Handlebars.compile(sourcebox);
         $.each( tabletop.sheets("Sheet1").all(), function(i, member) {
+          var scoreColor = getColor(member.score2013);
+          member['scoreColor'] = scoreColor;
           var html = template(member);
           $("#content").append(html);
           NCSenateDistricts[member.district] = member;
         });
 
-
+        console.log(NCSenateDistricts);
         loadGeo();
 //          processJSON(tabletop.sheets("Sheet1").all());
       }
+    var geoStyle = function(data) {
+      var sldust = Number(data.properties.SLDUST);
+      // Sort out how to get at the SLDUST data.
+      // console.log("geoStyle: ", Number(data.properties.SLDUST));
+
+      var score = NCSenateDistricts[sldust].score2013;
+      var scoreToColor = getColor(score);
+
+      return {
+        fillColor: scoreToColor,
+        weight: 1,
+        opacity: 0.51,
+        color: '#333333',
+        dashArray: '0',
+        fillOpacity: 1
+      }
+      }
 
       function loadGeo(district) {
-
-        var latitude = 35.2;
-        var longitude = -79.75;
-        var latLng = new L.LatLng(latitude, longitude);
-        map = L.map('map').setView(latLng, 7);
         senateLayer = L.geoJson(geosenate, {
           onEachFeature:onEachFeature,
-          style: {
-            fillColor: 'white',
-            weight: 1,
-            opacity: 0.51,
-            color: '#333333',
-            dashArray: '0',
-            fillOpacity: 0.7
-          }
-      });
+          style: geoStyle
+        });
 
-          for (var k = 0; k < geosenate.features.length; k++) {
-//            console.log('k', k);
-//            console.log(geosenate.features[k].properties.SLDUST);
-            dist = parseInt(geosenate.features[k].properties.SLDUST);
-            senateLayer.setStyle(function(shape) {
-              return getColor(dist, shape);
-              });
-            }
+//           for (var k = 0; k < geosenate.features.length; k++) {
+// //            console.log('k', k);
+// //            console.log(geosenate.features[k].properties.SLDUST);
+//             dist = parseInt(geosenate.features[k].properties.SLDUST);
+//             senateLayer.setStyle(function(shape) {
+//               return getColor(dist, shape);
+//               });
+//             }
 
 
         senateLayer.addTo(map);
@@ -153,7 +163,7 @@
         layer.on({
           mouseover: highlightFeature,
           mouseout: resetHighlight,
-          click: mapMemberDetail
+          click: mapMemberDetailClick
         });
       }
 
@@ -161,7 +171,24 @@
 
       function highlightFeature(e) {
         var layer = e.target;
-          console.log(layer);
+        var memberNumber = Number(layer.feature.properties.SLDUST);
+        var memberDetail = NCSenateDistricts[memberNumber];
+        var html;
+        console.log("highlightFeature: ", layer);
+
+        html  = "<div class='highlightFeatureInfo'>";
+        html += "<strong>" + memberDetail.fullname + "</strong>";
+        html += " (";
+        html += memberDetail.party
+        html += ")";
+        html += "</div>";
+
+        $('.info').html(html);
+
+        // This fills in the sidebar as you mouse around.
+        // NO STICKY CLICK
+        var html = app.infoboxTemplate(memberDetail);
+        $('#sidebar').html(html);
 
         layer.setStyle({
           weight: 5,
@@ -179,32 +206,36 @@
       function resetHighlight(e) {
         var layer = e.target;
         senateLayer.resetStyle(e.target);
-          info.update();
+        info.update();
       }
 
-
-      function mapMemberDetail(e) {
+      function mapMemberDetailClick(e) {
           var boundary = e.target;
-          console.log(boundary.feature.properties.SLDUST);
-          var member = memberFromBoundary(boundary);
-//          memberDetailFunction(members);
+          var memberNumber = Number(boundary.feature.properties.SLDUST);
+          console.log("mapMemberDetailClick: ", memberNumber);
+          var member = memberDetailFunction(memberNumber);
       }
 
 
-      function memberFromBoundary(){
-          console.log('memberfromBoundary')
+      function memberDetailFunction(memberNumber){
+        var districtDetail = NCSenateDistricts[memberNumber]
+        // 1. Build Template for the information box from districtDetails attributes.
+        // 2. Insert the rendered template into .info
+
+        var html = app.infoboxTemplate(districtDetail);
+        $('#sidebar').html(html);
+
+        // $('#sidebar').html(JSON.stringify(districtDetail));
       }
 
 
-      function getColor(dist, feature) {
-        return dist > 1000 ? '#800026' :
-           dist > 50  ? '#BD0026' :
-           dist > 20  ? '#E31A1C' :
-           dist > 10  ? '#FC4E2A' :
-           dist > 5   ? '#FD8D3C' :
-           dist > 2   ? '#FEB24C' :
-           dist > 0   ? '#FED976' :
-           '#FFEDA0';
+      function getColor(score) {
+        return score > 100 ? '#800026' :
+               score > 75  ? '#FC4E2A' :
+               score > 50   ? '#FD8D3C' :
+               score > 25   ? '#FEB24C' :
+               score > 0   ? '#FED976' :
+               '#FFEDA0';
       }
 
 
@@ -234,7 +265,7 @@
 
 
         <script id="senate-template" type="text/x-handlebars-template">
-          <div class="entry">
+          <div class="entry" style='background-color: {{scoreColor}};'>
             <div class="body">
               <strong>District {{{district}}}</strong><br>
               {{{fullname}}} ({{{party}}})<br>
@@ -249,7 +280,7 @@
         </script>
 
         <script id="senate-template-infobox" type="text/x-handlebars-template">
-          <div class="entry" style="padding-top:12px;">
+          <div class="entry" style="padding-top:12px; background-color: {{scoreColor}};">
             <div class="body">
               <button type='button' id='close' class='close'>x</button><br>
 
