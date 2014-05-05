@@ -67,6 +67,7 @@
     <script type="text/javascript">
       var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html';
       var dist;
+      var freeze;
       var NCSenateDistricts = {};
       console.log('NCSenateDistricts', NCSenateDistricts);
       var app = {};
@@ -74,13 +75,14 @@
       var latitude = 35.2;
       var longitude = -79.75;
       var latLng = new L.LatLng(latitude, longitude);
+      var sidebar = $('#sidebar');
       var map = L.map('map').setView(latLng, 7);
 
 
       function clearInfobox() {
         sidebar.html(' ');
-        sidebar.attr("class", "col-md-3")
       }
+
       $(document).ready( function() {
         Tabletop.init( { key: public_spreadsheet_url,
           callback: showInfo,
@@ -88,12 +90,13 @@
       });
 
       function showInfo(data, tabletop) {
+        var scoreColor;
         var source   = $("#senate-template").html();
         var template = Handlebars.compile(source);
         var sourcebox = $("#senate-template-infobox").html();
         app.infoboxTemplate = Handlebars.compile(sourcebox);
         $.each( tabletop.sheets("Sheet1").all(), function(i, member) {
-          var scoreColor = getColor(member.score2013);
+          scoreColor = getColor(member.score2013);
           member['scoreColor'] = scoreColor;
           var html = template(member);
           $("#content").append(html);
@@ -168,18 +171,18 @@
       }
 
 
-
       function highlightFeature(e) {
         var layer = e.target;
         var memberNumber = Number(layer.feature.properties.SLDUST);
         var memberDetail = NCSenateDistricts[memberNumber];
         var html;
+
         console.log("highlightFeature: ", layer);
 
         html  = "<div class='highlightFeatureInfo'>";
         html += "<strong>" + memberDetail.fullname + "</strong>";
         html += " (";
-        html += memberDetail.party
+        html += memberDetail.party;
         html += ")";
         html += "</div>";
 
@@ -187,7 +190,11 @@
 
         // This fills in the sidebar as you mouse around.
         // NO STICKY CLICK
-        var html = app.infoboxTemplate(memberDetail);
+
+
+        if (!freeze) {
+
+        html = app.infoboxTemplate(memberDetail);
         $('#sidebar').html(html);
 
         layer.setStyle({
@@ -202,14 +209,20 @@
         }
         info.update(layer.feature.properties);
       }
-
+      }
       function resetHighlight(e) {
         var layer = e.target;
         senateLayer.resetStyle(e.target);
         info.update();
+
+
+        if (!freeze) {
+          clearInfobox();
+        }
       }
 
       function mapMemberDetailClick(e) {
+          freeze=1;
           var boundary = e.target;
           var memberNumber = Number(boundary.feature.properties.SLDUST);
           console.log("mapMemberDetailClick: ", memberNumber);
@@ -230,12 +243,12 @@
 
 
       function getColor(score) {
-        return score > 100 ? '#800026' :
-               score > 75  ? '#FC4E2A' :
-               score > 50   ? '#FD8D3C' :
-               score > 25   ? '#FEB24C' :
-               score > 0   ? '#FED976' :
-               '#FFEDA0';
+        return score > 80 ? 'rgb(0, 104, 55)' :
+               score > 60  ? 'rgb(102, 189, 99)' :
+               score > 40   ? 'rgb(166, 217, 106)' :
+               score > 20   ? 'rgb(255, 255, 191)' :
+               score > 0   ? 'rgb(244, 109, 67)' :
+               'rgb(165, 0, 38)';
       }
 
 
@@ -254,7 +267,11 @@
       };
       //
       info.addTo(map);
-
+      $(document).on("click","button",function(event) {
+        event.preventDefault();
+        clearInfobox();
+        freeze=0;
+      });
     </script>
 
 
@@ -265,12 +282,13 @@
 
 
         <script id="senate-template" type="text/x-handlebars-template">
-          <div class="entry" style='background-color: {{scoreColor}};'>
+          <div class="entry" >
+          <div style='margin-top:-5px; margin-bottom:3px; background-color: {{scoreColor}};height:20px;'></div>
             <div class="body">
               <strong>District {{{district}}}</strong><br>
               {{{fullname}}} ({{{party}}})<br>
               {{#if phone}}{{{phone}}}<br>{{/if}}
-              Counties: <em>{{{countiesrepresented}}}</em><br>
+
               Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
               2013 Score: <strong>{{{score2013}}}</strong><br>
               {{{notes}}}<br>
@@ -282,7 +300,7 @@
         <script id="senate-template-infobox" type="text/x-handlebars-template">
           <div class="entry" style="padding-top:12px; background-color: {{scoreColor}};">
             <div class="body">
-              <button type='button' id='close' class='close'>x</button><br>
+              <button type='button' id='close' class='close'>&times;</button><br>
 
               <strong>                {{{fullname}}} ({{{party}}})</strong><br>
               District {{{district}}}<br>
