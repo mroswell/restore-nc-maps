@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nclcv-scorecard-map.iml" filepath="$PROJECT_DIR$/.idea/nclcv-scorecard-map.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/mdlcv-endorsement-map.iml" filepath="$PROJECT_DIR$/.idea/mdlcv-endorsement-map.iml" />
     </modules>
   </component>
 </project>

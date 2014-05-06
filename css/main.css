@@ -10,17 +10,16 @@
 }
 
 
-
 body {
     background: #f7f7f7; /*#FCFCBD;*/
-    font-family: "arial";
+    font-family: "arial", "helvetica", sans-serif;
 }
 
 .entry {
     float: left;
     width: 209px;
     border: solid black 1px;
-    height: 220px;
+    height: 400px;
     padding: 18px;
     margin: 8px;
     background: white;
@@ -128,14 +127,3 @@ button.close {margin-top: -4px;margin-right: -8px; }
 .my-legend a {
     color: #777;
 }
-
-
-
-
-
-
-
-
-
-
-

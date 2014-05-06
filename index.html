@@ -26,7 +26,7 @@
       <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
 
       <script type="text/javascript" src="js/vendor/handlebars.js"></script>
-      <script src="maps/nc_sldu13_orig.json"></script>
+      <script src="maps/tl_rd13_24_sldl_7o.js"></script>
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
@@ -65,15 +65,17 @@
     <script type="text/javascript" src="js/vendor/tabletop.js"></script>
 
     <script type="text/javascript">
-      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html';
+      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
+
+      //https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html
       var dist;
       var freeze;
-      var NCSenateDistricts = {};
-      console.log('NCSenateDistricts', NCSenateDistricts);
+      var MDHouseDistricts = {};
+      console.log('MDHouseDistricts', MDHouseDistricts);
       var app = {};
-      var senateLayer;
-      var latitude = 35.2;
-      var longitude = -79.75;
+      var houseLayer;
+      var latitude = 39.07;
+      var longitude = -76.79;
       var latLng = new L.LatLng(latitude, longitude);
       var sidebar = $('#sidebar');
       var map = L.map('map').setView(latLng, 7);
@@ -95,24 +97,28 @@
         var template = Handlebars.compile(source);
         var sourcebox = $("#senate-template-infobox").html();
         app.infoboxTemplate = Handlebars.compile(sourcebox);
-        $.each( tabletop.sheets("Sheet1").all(), function(i, member) {
+        $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
           scoreColor = getColor(member.score2013);
           member['scoreColor'] = scoreColor;
           var html = template(member);
           $("#content").append(html);
-          NCSenateDistricts[member.district] = member;
+          MDHouseDistricts[member.district] = member;
+
         });
 
-        console.log(NCSenateDistricts);
+        console.log("MDHouseDistricts", MDHouseDistricts);
         loadGeo();
 //          processJSON(tabletop.sheets("Sheet1").all());
       }
     var geoStyle = function(data) {
-      var sldust = Number(data.properties.SLDUST);
-      // Sort out how to get at the SLDUST data.
-      // console.log("geoStyle: ", Number(data.properties.SLDUST));
+        console.log('data', data);
+      var sldlst = data.properties.SLDLST;
+        console.log(sldlst);
+      // Sort out how to get at the SLDLST data.
+      // console.log("geoStyle: ", Number(data.properties.SLDLST));
 
-      var score = NCSenateDistricts[sldust].score2013;
+      var score = MDHouseDistricts[district].score2013;
+//      var score = MDHouseDistricts[district].score2013;
       var scoreToColor = getColor(score);
 
       return {
@@ -126,22 +132,22 @@
       }
 
       function loadGeo(district) {
-        senateLayer = L.geoJson(geosenate, {
+        houseLayer = L.geoJson(mdHouse, {
           onEachFeature:onEachFeature,
           style: geoStyle
         });
 
-//           for (var k = 0; k < geosenate.features.length; k++) {
+//           for (var k = 0; k < mdHouse.features.length; k++) {
 // //            console.log('k', k);
-// //            console.log(geosenate.features[k].properties.SLDUST);
-//             dist = parseInt(geosenate.features[k].properties.SLDUST);
-//             senateLayer.setStyle(function(shape) {
+// //            console.log(mdHouse.features[k].properties.SLDLST);
+//             dist = parseInt(mdHouse.features[k].properties.SLDLST);
+//             houseLayer.setStyle(function(shape) {
 //               return getColor(dist, shape);
 //               });
 //             }
 
 
-        senateLayer.addTo(map);
+        houseLayer.addTo(map);
 
 
 //      .q0-6{fill:rgb(255,0,0)}
@@ -173,8 +179,8 @@
 
       function highlightFeature(e) {
         var layer = e.target;
-        var memberNumber = Number(layer.feature.properties.SLDUST);
-        var memberDetail = NCSenateDistricts[memberNumber];
+        var memberNumber = Number(layer.feature.properties.SLDLST);
+        var memberDetail = MDHouseDistricts[memberNumber];
         var html;
 
         console.log("highlightFeature: ", layer);
@@ -212,7 +218,7 @@
       }
       function resetHighlight(e) {
         var layer = e.target;
-        senateLayer.resetStyle(e.target);
+        houseLayer.resetStyle(e.target);
         info.update();
 
 
@@ -224,14 +230,14 @@
       function mapMemberDetailClick(e) {
           freeze=1;
           var boundary = e.target;
-          var memberNumber = Number(boundary.feature.properties.SLDUST);
+          var memberNumber = Number(boundary.feature.properties.SLDLST);
           console.log("mapMemberDetailClick: ", memberNumber);
           var member = memberDetailFunction(memberNumber);
       }
 
 
       function memberDetailFunction(memberNumber){
-        var districtDetail = NCSenateDistricts[memberNumber]
+        var districtDetail = MDHouseDistricts[memberNumber]
         // 1. Build Template for the information box from districtDetails attributes.
         // 2. Insert the rendered template into .info
 
@@ -262,7 +268,7 @@
       };
       //      // method that we will use to update the control based on feature properties passed
       info.update = function (props) {
-//          this._div.innerHTML = '<h4>Why won\'t this display</h4>'+  (props ?  '<b>' + props.SLDUST +'</b>'
+//          this._div.innerHTML = '<h4>Why won\'t this display</h4>'+  (props ?  '<b>' + props.SLDLST +'</b>'
 //                  : 'Hover over a state');
       };
       //
@@ -286,12 +292,14 @@
           <div style='margin-top:-5px; margin-bottom:3px; background-color: {{scoreColor}};height:20px;'></div>
             <div class="body">
               <strong>District {{{district}}}</strong><br>
-              {{{fullname}}} ({{{party}}})<br>
+              {{{delegate}}}<br>
+                {{{senator}}}<br>
               {{#if phone}}{{{phone}}}<br>{{/if}}
-
+              {{{description}}}
               Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
               2013 Score: <strong>{{{score2013}}}</strong><br>
               {{{notes}}}<br>
+                {{#if pdfurl}}<a target="_blank" href="{{{pdfurl}}}"><img src="#"> Download Ballot </a>{{/if}}
               {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
             </div>
           </div>
@@ -305,7 +313,7 @@
               <strong>                {{{fullname}}} ({{{party}}})</strong><br>
               District {{{district}}}<br>
               {{#if phone}}{{{phone}}}<br>{{/if}}
-              Counties: <em>{{{countiesrepresented}}}</em><br>
+              {{{description}}}<br>
               Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
               2013 Score: <strong>{{{score2013}}}</strong><br>
               {{{notes}}}<br>
