@@ -57,8 +57,9 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-
+    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
     <script src="js/vendor/bootstrap.min.js"></script>
+
 
     <script src="js/main.js"></script>
 
@@ -103,7 +104,6 @@
           var html = template(member);
           $("#content").append(html);
           MDHouseDistricts[member.district] = member;
-
         });
 
         console.log("MDHouseDistricts", MDHouseDistricts);
@@ -112,12 +112,17 @@
       }
     var geoStyle = function(data) {
         console.log('data', data);
+        console.log('MDHouseDistricts',MDHouseDistricts);
+        var houseDistricts= _pluck(MDHouseDistricts.properties.SLDLST);
+        console.log('houseDistricts', houseDistricts);
       var sldlst = data.properties.SLDLST;
         console.log(sldlst);
       // Sort out how to get at the SLDLST data.
       // console.log("geoStyle: ", Number(data.properties.SLDLST));
-
-      var score = MDHouseDistricts[district].score2013;
+//      if (Number(MDHouseDistricts[sldlst])!= NaN) {
+//      var score = Number(MDHouseDistricts[sldlst]).score2013;
+        var score = MDHouseDistricts[sldlst].score2013;
+//    }
 //      var score = MDHouseDistricts[district].score2013;
       var scoreToColor = getColor(score);
 
