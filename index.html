@@ -35,7 +35,7 @@
 
     <div class="container">
     <div class="row">
-      <h2>North Carolina League of Conservation Voters  <br><small>State Senate Scorecard Map</small></h2>
+      <h2>Maryland League of Conservation Voters  <br><small>2014 Endorsement Map</small></h2>
     </div>
     <div class="row">
       <div id="main" class="col-md-9">
@@ -66,6 +66,8 @@
     <script type="text/javascript" src="js/vendor/tabletop.js"></script>
 
     <script type="text/javascript">
+
+
       var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
 
       //https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html
@@ -75,11 +77,12 @@
       console.log('MDHouseDistricts', MDHouseDistricts);
       var app = {};
       var houseLayer;
-      var latitude = 39.07;
-      var longitude = -76.79;
+      var latitude = 38.9;
+      var longitude = -77.4;
       var latLng = new L.LatLng(latitude, longitude);
       var sidebar = $('#sidebar');
-      var map = L.map('map').setView(latLng, 7);
+      var map = L.map('map').setView(latLng, 7.9);
+
 
 
       function clearInfobox() {
@@ -111,30 +114,51 @@
 //          processJSON(tabletop.sheets("Sheet1").all());
       }
     var geoStyle = function(data) {
-        console.log('data', data);
-        console.log('MDHouseDistricts',MDHouseDistricts);
-        var houseDistricts= _pluck(MDHouseDistricts.properties.SLDLST);
-        console.log('houseDistricts', houseDistricts);
+//      console.log('data', data);
+      console.log('-------------------');
+//      console.log('MDHouseDistricts',MDHouseDistricts);
       var sldlst = data.properties.SLDLST;
-        console.log(sldlst);
+      sldlst = sldlst.replace(/^0+/, '');
+//      var convertedSLDLST = Number(sldlst);
+//      if(convertedSLDLST){
+//        sldlst = convertedSLDLST;
+//      }
+      console.log(sldlst);
+      console.log('-------------------');
+
+      var houseDistrict = MDHouseDistricts[sldlst];
+       console.log('houseDistrict', houseDistrict);
+//        var sldlst = data.properties.SLDLST;
+//        console.log(sldlst);
       // Sort out how to get at the SLDLST data.
       // console.log("geoStyle: ", Number(data.properties.SLDLST));
 //      if (Number(MDHouseDistricts[sldlst])!= NaN) {
 //      var score = Number(MDHouseDistricts[sldlst]).score2013;
-        var score = MDHouseDistricts[sldlst].score2013;
+//        var score = MDHouseDistricts[sldlst].score2013;
 //    }
 //      var score = MDHouseDistricts[district].score2013;
-      var scoreToColor = getColor(score);
+//      var scoreToColor = getColor(score);
+      var color = 'white';
+//      if(houseDistrict){
+//        color = 'green';
+//      }
+//      if(houseDistrict.colormethod == "Yellow") {
+//        color= 'goldenrod';
+//      }
+
+      if(houseDistrict) {
+        color = houseDistrict.colormethod;
+      }
 
       return {
-        fillColor: scoreToColor,
+        fillColor: color,
         weight: 1,
         opacity: 0.51,
         color: '#333333',
         dashArray: '0',
         fillOpacity: 1
       }
-      }
+      };
 
       function loadGeo(district) {
         houseLayer = L.geoJson(mdHouse, {
@@ -170,6 +194,11 @@
 //          maxZoom: 18
 //        }).addTo(map);
 
+              L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
+        attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">',
+        maxZoom: 18,
+        subdomains: '1234'
+      }).addTo(map);
 
       }
 
@@ -184,17 +213,21 @@
 
       function highlightFeature(e) {
         var layer = e.target;
-        var memberNumber = Number(layer.feature.properties.SLDLST);
+        var memberNumber = layer.feature.properties.SLDLST;
+        memberNumber = memberNumber.replace(/^0+/, '');
         var memberDetail = MDHouseDistricts[memberNumber];
+        if(!memberDetail){
+          console.log(memberNumber);
+          return;
+        }
         var html;
 
         console.log("highlightFeature: ", layer);
 
         html  = "<div class='highlightFeatureInfo'>";
-        html += "<strong>" + memberDetail.fullname + "</strong>";
-        html += " (";
-        html += memberDetail.party;
-        html += ")";
+        html += "<strong>" + memberDetail.delegate + "</strong>";
+        html += "<br />";
+        html += memberDetail.senator;
         html += "</div>";
 
         $('.info').html(html);
@@ -223,7 +256,7 @@
       }
       function resetHighlight(e) {
         var layer = e.target;
-        houseLayer.resetStyle(e.target);
+        houseLayer.resetStyle(layer);
         info.update();
 
 
@@ -242,7 +275,7 @@
 
 
       function memberDetailFunction(memberNumber){
-        var districtDetail = MDHouseDistricts[memberNumber]
+        var districtDetail = MDHouseDistricts[memberNumber];
         // 1. Build Template for the information box from districtDetails attributes.
         // 2. Insert the rendered template into .info
 
@@ -287,16 +320,12 @@
 
 
 
-
-
-
-
-
         <script id="senate-template" type="text/x-handlebars-template">
           <div class="entry" >
           <div style='margin-top:-5px; margin-bottom:3px; background-color: {{scoreColor}};height:20px;'></div>
             <div class="body">
               <strong>District {{{district}}}</strong><br>
+              {{{governor}}}<br>
               {{{delegate}}}<br>
                 {{{senator}}}<br>
               {{#if phone}}{{{phone}}}<br>{{/if}}
@@ -311,11 +340,11 @@
         </script>
 
         <script id="senate-template-infobox" type="text/x-handlebars-template">
-          <div class="entry" style="padding-top:12px; background-color: {{scoreColor}};">
+          <div class="entry" style="padding-top:3px;">
             <div class="body">
               <button type='button' id='close' class='close'>&times;</button><br>
-
-              <strong>                {{{fullname}}} ({{{party}}})</strong><br>
+              {{{governor}}}<br>
+              <strong> {{{delegate}}} </strong><br>
               District {{{district}}}<br>
               {{#if phone}}{{{phone}}}<br>{{/if}}
               {{{description}}}<br>
