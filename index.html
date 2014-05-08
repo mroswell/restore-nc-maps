@@ -17,13 +17,15 @@
                 padding-bottom: 20px;
             }
         </style>
-      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+      <!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>-->
+      <!--<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />-->
 
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 
       <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
       <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 
       <script type="text/javascript" src="js/vendor/handlebars.js"></script>
       <script src="maps/tl_rd13_24_sldl_7o.js"></script>
@@ -70,7 +72,6 @@
 
       var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
 
-      //https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdHRWYmRIYldKcFBFVnRELUhVay04NWc&single=true&gid=0&output=html
       var dist;
       var freeze;
       var MDHouseDistricts = {};
@@ -82,6 +83,14 @@
       var latLng = new L.LatLng(latitude, longitude);
       var sidebar = $('#sidebar');
       var map = L.map('map').setView(latLng, 7.9);
+
+//      var map = L.mapbox.map('examples.map-9ijuk24y')
+//          .setView(latLng, 7.9);
+
+//      var layer = L.mapbox.tileLayer('http://a.tiles.mapbox.com/v3/examples.map-0l53fhk2.json');
+//      layer.addTo(map);
+
+
 
 
 
@@ -128,23 +137,9 @@
 
       var houseDistrict = MDHouseDistricts[sldlst];
        console.log('houseDistrict', houseDistrict);
-//        var sldlst = data.properties.SLDLST;
-//        console.log(sldlst);
-      // Sort out how to get at the SLDLST data.
-      // console.log("geoStyle: ", Number(data.properties.SLDLST));
-//      if (Number(MDHouseDistricts[sldlst])!= NaN) {
-//      var score = Number(MDHouseDistricts[sldlst]).score2013;
-//        var score = MDHouseDistricts[sldlst].score2013;
-//    }
-//      var score = MDHouseDistricts[district].score2013;
-//      var scoreToColor = getColor(score);
+
       var color = 'white';
-//      if(houseDistrict){
-//        color = 'green';
-//      }
-//      if(houseDistrict.colormethod == "Yellow") {
-//        color= 'goldenrod';
-//      }
+
 
       if(houseDistrict) {
         color = houseDistrict.colormethod;
@@ -161,22 +156,32 @@
       };
 
       function loadGeo(district) {
+
+//        var tileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//          maxZoom:18
+//        });
+        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+          maxZoom:18,
+          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+//        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+//          maxZoom: 18,
+//          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+//              '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+//              'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+//          id: 'examples.map-9ijuk24y'
+//        }).addTo(map);
+
         houseLayer = L.geoJson(mdHouse, {
           onEachFeature:onEachFeature,
           style: geoStyle
         });
 
-//           for (var k = 0; k < mdHouse.features.length; k++) {
-// //            console.log('k', k);
-// //            console.log(mdHouse.features[k].properties.SLDLST);
-//             dist = parseInt(mdHouse.features[k].properties.SLDLST);
-//             houseLayer.setStyle(function(shape) {
-//               return getColor(dist, shape);
-//               });
-//             }
 
 
         houseLayer.addTo(map);
+//        map.addLayer(tileLayer);
 
 
 //      .q0-6{fill:rgb(255,0,0)}
@@ -194,14 +199,13 @@
 //          maxZoom: 18
 //        }).addTo(map);
 
-              L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
-        attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">',
-        maxZoom: 18,
-        subdomains: '1234'
-      }).addTo(map);
+//              L.tileLayer('http://otile{s}.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpeg', {
+//        attribution: 'Tiles Courtesy of <a href="http://www.mapquest.com/" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png">',
+//        maxZoom: 18,
+//        subdomains: '1234'
+//      }).addTo(map);
 
       }
-
       function onEachFeature(feature, layer) {
         layer.on({
           mouseover: highlightFeature,
@@ -225,15 +229,10 @@
         console.log("highlightFeature: ", layer);
 
         html  = "<div class='highlightFeatureInfo'>";
-        html += "<strong>" + memberDetail.delegate + "</strong>";
-        html += "<br />";
-        html += memberDetail.senator;
+        html += "<strong> District " + memberDetail.district + "</strong>";
         html += "</div>";
 
         $('.info').html(html);
-
-        // This fills in the sidebar as you mouse around.
-        // NO STICKY CLICK
 
 
         if (!freeze) {
@@ -312,9 +311,9 @@
       //
       info.addTo(map);
       $(document).on("click","button",function(event) {
+        freeze=0;
         event.preventDefault();
         clearInfobox();
-        freeze=0;
       });
     </script>
 
@@ -324,15 +323,16 @@
           <div class="entry" >
           <div style='margin-top:-5px; margin-bottom:3px; background-color: {{scoreColor}};height:20px;'></div>
             <div class="body">
-              <strong>District {{{district}}}</strong><br>
+              <strong>District {{{district}}} Endorsements</strong><br>
               {{{governor}}}<br>
+              {{{attorneygeneral}}}<br>
+              {{{comptroller}}}<br>
               {{{delegate}}}<br>
-                {{{senator}}}<br>
-              {{#if phone}}{{{phone}}}<br>{{/if}}
-              {{{description}}}
-              Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
-              2013 Score: <strong>{{{score2013}}}</strong><br>
-              {{{notes}}}<br>
+              {{#if delegate}}{{{delegate}}}<br>{{/if}}
+              {{#if delegate2}}{{{delegate2}}}<br>{{/if}}
+              {{#if delegate3}}{{{delegate3}}}<br>{{/if}}
+              {{#if delegate4}}{{{delegate4}}}<br>{{/if}}
+              {{#if description}}{{{description}}}<br>{{/if}}
                 {{#if pdfurl}}<a target="_blank" href="{{{pdfurl}}}"><img src="#"> Download Ballot </a>{{/if}}
               {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
             </div>
@@ -340,17 +340,21 @@
         </script>
 
         <script id="senate-template-infobox" type="text/x-handlebars-template">
-          <div class="entry" style="padding-top:3px;">
+          <div class="entry-infobox" style="padding-top:6px;">
             <div class="body">
               <button type='button' id='close' class='close'>&times;</button><br>
+              <strong>District {{{district}}} Endorsements</strong><br>
+
               {{{governor}}}<br>
-              <strong> {{{delegate}}} </strong><br>
-              District {{{district}}}<br>
-              {{#if phone}}{{{phone}}}<br>{{/if}}
-              {{{description}}}<br>
-              Lifetime Score: <strong>{{{lifetimescore}}}</strong><br>
-              2013 Score: <strong>{{{score2013}}}</strong><br>
-              {{{notes}}}<br>
+              {{{attorneygeneral}}}<br>
+              {{{comptroller}}}<br>
+              {{{delegate}}}<br>
+              {{#if delegate}}{{{delegate}}}<br>{{/if}}
+              {{#if delegate2}}{{{delegate2}}}<br>{{/if}}
+              {{#if delegate3}}{{{delegate3}}}<br>{{/if}}
+              {{#if delegate4}}{{{delegate4}}}<br>{{/if}}
+              {{#if description}}{{{description}}}<br>{{/if}}
+
               {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
             </div>
           </div>
