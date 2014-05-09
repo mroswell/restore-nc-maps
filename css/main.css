@@ -3,7 +3,9 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
+/** {*/
+/*@icon-font-path: "fonts/";*/
+    /*}*/
 #map {
     height: 420px;
     width: 890px;
@@ -13,6 +15,8 @@
 body {
     background: #f7f7f7; /*#FCFCBD;*/
     font-family: "arial", "helvetica", sans-serif;
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 
 .entry {
@@ -30,11 +34,21 @@ body {
     float: right;
     width: 220px;
     border: solid black 1px;
-    height: 215px;
-    padding: 25px;
-    margin: 25px 10px 25px 25px;
+    /*height: 215px;*/
+    padding: 18px;
+    margin: 0px 10px 20px 20px;
     background: white;
     line-height: 1.1;
+}
+
+.entry-header {
+  padding:3px;
+    background-color: #A6D96A;
+    margin-top: .6em;
+    margin-bottom: .4em;
+}
+.entry-header p {
+    margin-bottom: 0;
 }
 h2 {
     font-size: 2em;
