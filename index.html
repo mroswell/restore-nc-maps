@@ -17,10 +17,9 @@
                 padding-bottom: 20px;
             }
         </style>
-      <!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>-->
-      <!--<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />-->
 
-      <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+
+      <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 
       <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
@@ -29,6 +28,8 @@
 
       <script type="text/javascript" src="js/vendor/handlebars.js"></script>
       <script src="maps/tl_rd13_24_sldl_7o.js"></script>
+      <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+      <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
@@ -82,7 +83,7 @@
       var longitude = -77.4;
       var latLng = new L.LatLng(latitude, longitude);
       var sidebar = $('#sidebar');
-      var map = L.map('map').setView(latLng, 7.9);
+      var map = L.map('map').setView(latLng, 8);
 
 //      var map = L.mapbox.map('examples.map-9ijuk24y')
 //          .setView(latLng, 7.9);
@@ -160,18 +161,19 @@
 //        var tileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //          maxZoom:18
 //        });
-        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-          maxZoom:18,
-          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-//        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
-//          maxZoom: 18,
-//          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-//              '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-//              'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-//          id: 'examples.map-9ijuk24y'
+//        L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+//          maxZoom:18,
+//          attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 //        }).addTo(map);
+
+        L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+          maxZoom: 18,
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+              '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+              'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+          id: 'mroswell.i6hfjp09',
+        }).addTo(map);
+        //'examples.map-9ijuk24y'
 
         houseLayer = L.geoJson(mdHouse, {
           onEachFeature:onEachFeature,
