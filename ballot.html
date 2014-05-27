@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+
+  <!--<link rel="stylesheet" href="css/bootstrap-theme.min.css">-->
+  <link rel="stylesheet" href="css/main.css">
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+
+  <script type="text/javascript" src="js/vendor/handlebars.js"></script>
+  <script src="maps/tl_rd13_24_sldl_7-ms-ms.js"></script>
+  <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+
+  <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+</head>
+<body>
+
+
+<div class="container">
+  <div class="row">
+    <h2>Maryland League of Conservation Voters  <br><small>2014 Endorsement Map</small></h2>
+  </div>
+  <div class="row">
+    <div id="main" class="col-xs-9">
+      <div id="map"></div>
+    </div>
+    <div id="sidebar" class="col-xs-3"></div>
+  </div>
+  <div class="row">
+    <div id="content"></div>
+  </div>
+</div><!-- /container -->
+
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script src="js/vendor/bootstrap.min.js"></script>
+
+
+<script src="js/main.js"></script>
+
+<script type="text/javascript" src="js/vendor/tabletop.js"></script>
+
+<script type="text/javascript">
+
+
+  var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
+
+  var dist;
+  var freeze=0;
+  var MDHouseDistricts = {};
+  console.log('MDHouseDistricts', MDHouseDistricts);
+  var app = {};
+  var houseLayer;
+  var latitude = 38.9;
+  var longitude = -77.4;
+  var latLng = new L.LatLng(latitude, longitude);
+  var sidebar = $('#sidebar');
+//  var map = L.map('map').setView(latLng, 8);
+
+
+  $(document).ready( function() {
+    Tabletop.init( { key: public_spreadsheet_url,
+      callback: showInfo,
+      parseNumbers: true } );
+  });
+
+  function showInfo(data, tabletop) {
+    var scoreColor;
+    var sourcebox = $("#senate-template-infobox").html();
+    app.infoboxTemplate = Handlebars.compile(sourcebox);
+    $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
+      MDHouseDistricts[member.district] = member;
+    });
+    console.log("MDHouseDistricts", MDHouseDistricts);
+    var districtnumber = getQueryVariable('distnum');
+    memberDetailFunction(districtnumber);
+  }
+
+  function memberDetailFunction(districtNumber){
+    var districtDetail = MDHouseDistricts[districtNumber];
+    var sourcebox = $("#senate-template-infobox").html();
+    app.infoboxTemplate = Handlebars.compile(sourcebox);
+    var html = app.infoboxTemplate(districtDetail);
+    $('#sidebar').html(html);
+    // $('#sidebar').html(JSON.stringify(districtDetail));
+  }
+
+  function getQueryVariable(variable)
+  {
+    var query = window.location.search.substring(1);
+    var vars = query.split("&");
+    for (var i=0;i<vars.length;i++) {
+      var pair = vars[i].split("=");
+      if(pair[0] == variable){return pair[1];}
+    }
+    return(false);
+  }
+
+</script>
+
+
+<script id="senate-template-infobox" type="text/x-handlebars-template">
+  <div class="entry-infobox" style="padding-top:9px;">
+    <div class="body">
+      <button type='button' id='close' class='close'>&times;</button><br>
+
+      <strong>District {{{district}}} Endorsements</strong><br />
+      <p class="entry-header">Governor</p>
+      <p class="icon icon-check"> {{{governor}}}</p><br />
+      <p class="entry-header">Attorney General</p>
+
+      <p class="icon icon-check"> {{{attorneygeneral}}}</p><br />
+      <p class="entry-header">Comptroller</p>
+
+      <p class="icon icon-check"> {{{comptroller}}}</p><br />
+      {{#if senator}}
+      <p class="entry-header">Senate</p>
+      <p class="icon icon-check"> {{{senator}}}</p><br />{{/if}}
+      {{#if delegate}}
+      <p class="entry-header">House</p>
+      <p class="icon icon-check"> {{{delegate}}}</p>
+      <br>{{/if}}
+      {{#if delegate2}}<p class="icon icon-check"> {{{delegate2}}}</p><br />{{/if}}
+      {{#if delegate3}}<p class="icon icon-check"> {{{delegate3}}}</p><br />{{/if}}
+      {{#if delegate4}}<p class="icon icon-check"> {{{delegate4}}}<br />{{/if}}</p>
+      {{#if description}}
+      <p class="entry-header"> <span class="icon icon-star"> MDLCV Priority Race</span></p>
+      {{{description}}}<br>{{/if}}
+
+    </div>
+  </div>
+</script> <!-- /container -->
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+      function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+    e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+    e.src='//www.google-analytics.com/analytics.js';
+    r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+  ga('create','UA-XXXXX-X');ga('send','pageview');
+</script>
+</body>
+</html>
