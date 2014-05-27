@@ -126,7 +126,6 @@
 
       if(houseDistrict) {
         color = houseDistrict.colormethod;
-//        color='#0B8973';
       }
 
       return {
@@ -197,9 +196,9 @@
             fillOpacity: 0.7
         });
 
-        if (!L.Browser.ie && !L.Browser.opera) {
-          layer.bringToFront();
-        }
+//        if (!L.Browser.ie && !L.Browser.opera) {
+//          layer.bringToFront();
+//        }
         info.update(layer.feature.properties);
       }
       }
