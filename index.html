@@ -49,8 +49,6 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-
-
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
   <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
@@ -67,7 +65,6 @@
    var dist;
    var freeze=0;
    var MDHouseDistricts = {};
-   console.log('MDHouseDistricts', MDHouseDistricts);
    var app = {};
    var houseLayer;
    var latitude = 38.9;
@@ -106,14 +103,13 @@
 //   if(convertedSLDLST){
 //    sldlst = convertedSLDLST;
 //   }
-   console.log(sldlst);
-   console.log('-------------------');
+   //console.log(sldlst);
+   //console.log('-------------------');
 
    var houseDistrict = MDHouseDistricts[sldlst];
-    console.log('houseDistrict', houseDistrict);
+    //console.log('houseDistrict', houseDistrict);
 
    var color = 'white';
-
 
    if(houseDistrict) {
     color = houseDistrict.colormethod;
@@ -279,7 +275,7 @@
        <div style=" text-align:center; margin-bottom:1em;">
         <p style="font-size:12px; padding-top:12px;">
          Bring this ballot to the poll. <br/>
-         <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?distnum={{district}}" >Click the map<br />then click here to print.<br />
+         <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
          <span class="icon icon-print"></span></a>
         </p>
        </div>
