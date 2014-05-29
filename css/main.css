@@ -9,13 +9,13 @@
 
 a:visited {color:#0B8973;}
 
-.wrapper {width:1100px;}
+.wrapper {width:1200px;}
 .container {
     width:auto;
 }
-/*.wide1, .wide2, .wide3, .wide4, .wide5 {*/
-    /*width:990px;*/
-/*}*/
+.wide1, .wide2, .wide3, .wide4, .wide5 {
+    width:1200px;
+}
 
 #map {
     height: 470px;
@@ -43,7 +43,7 @@ body {
 
 .entry-header {
     font-weight:bold;
-  /*padding:3px;*/
+  padding:3px;
     background-color: #0B8973;/*#A6D96A;*/
     color:white;
     margin-top: .6em;
