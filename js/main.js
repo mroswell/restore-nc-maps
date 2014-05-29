@@ -67,6 +67,7 @@ var geoStyle = function(data) {
 function loadGeo(district) {
   L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
     maxZoom: 18,
+    minZoom:5,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
       '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
       'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -153,27 +154,26 @@ function mapMemberDetailClick(e) {
 function memberDetailFunction(districtNumber){
   var districtDetail = MDHouseDistricts[districtNumber];
   // 1. Build Template for the information box from districtDetails attributes.
-  // 2. Insert the rendered template into .info
-
   var html = app.infoboxTemplate(districtDetail);
+  // 2. Insert the rendered template into #sidebar
   $('#sidebar').html(html);
 
-  // $('#sidebar').html(JSON.stringify(districtDetail));
 }
 
 var info = L.control();
 
 info.onAdd = function (map) {
   this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-  this.update();
+  this.update({ position: 'topleft' });
   return this._div;
 };
 //   // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-//     this._div.innerHTML = '<h4>Why won\'t this display</h4>'+ (props ? '<b>' + props.SLDLST +'</b>'
-//         : 'Hover over a state');
 };
 //
+
+//new L.Control.Zoom({ position: 'topright' }).addTo(map);
+
 info.addTo(map);
 $(document).on("click","button",function(event) {
   event.preventDefault();
