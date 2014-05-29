@@ -6,7 +6,7 @@ var MDHouseDistricts = {};
 var app = {};
 var houseLayer;
 var latitude = 38.9;
-var longitude = -77.4;
+var longitude = -77.28;
 var latLng = new L.LatLng(latitude, longitude);
 var sidebar = $('#sidebar');
 var map = L.map('map').setView(latLng, 8);

@@ -9,11 +9,12 @@
 #map {
     height: 420px;
     width: 900px;
+    margin-bottom: 24px;
 }
 
 
 body {
-    background: #f7f7f7; /*#FCFCBD;*/
+    background: #0B8973; #FCFCBD;
     font-family: "arial", "helvetica", sans-serif;
     padding-top: 50px;
     padding-bottom: 20px;
@@ -71,39 +72,9 @@ h2 {
 .icon-envelope {background-color:#c0c0c0;}
 .icon-2x {font-size: 1.7em;}
 
-.q0-5{fill:#A09174}
-.q1-5{fill:#BFB29E}
-.q2-5{fill:#DCEAD6}
-.q3-5{fill:#98C58D}
-.q4-5{fill:#46A847}
-
-.q0-6{fill:rgb(255,0,0)}
-.q1-6{fill:#FC8400;}
-.q2-6{fill:#FDC300;}
-.q3-6{fill:#FEF200;}
-.q4-6{fill:#82e0c3;}
-.q5-6{fill:#4EAB07;}
-
-.q0-6{fill:rgb(255,0,0)}
-.q1-6{fill:#FC8400;}
-.q2-6{fill:#FDC300;}
-.q3-6{fill:#FEF200;}
-.q4-6{fill:#82e0c3;}
-.q5-6{fill:#4EAB07;}
-
-
-.q0-7{fill:#D32;}
-.q1-7{fill:#E98736;}
-.q2-7{fill:#F1C76E;}
-.q3-7{fill:#FFB;}
-/*.q4-7{fill:#C0DC8F;}*/
-/*.q5-7{fill:#7ABB6D;}*/
-.q4-7{fill:#C0DC8F;}
-.q5-7{fill:#195;}
-
-.q6-7{fill:#195;}
-.q7-7{fill: rgba(22, 48, 3, 0.93);}
-
+.wide4 a:link, .wide4 a:visited, .wide4 a:hover, .wide4 a:active {
+    padding: 0 17px;
+}
 button.close {margin-top: -4px;margin-right: -8px; }
 
 .my-legend .legend-title {
