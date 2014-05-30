@@ -114,3 +114,7 @@ button.close {margin-top: -4px;margin-right: -8px; }
 .my-legend a {
     color: #777;
 }
+
+.icon-star {
+    font-weight: bold;
+}
