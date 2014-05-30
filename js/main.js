@@ -120,7 +120,7 @@ function highlightFeature(e) {
       weight: 5,
       color: '#666',
       dashArray: '',
-      fillOpacity: 0.7
+      fillOpacity: 0.5
     });
 
     if (!L.Browser.ie && !L.Browser.opera) {
@@ -149,6 +149,13 @@ function mapMemberDetailClick(e) {
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
   console.log("mapMemberDetailClick: ", districtNumber);
   var member = memberDetailFunction(districtNumber);
+
+  boundary.setStyle({
+    weight: 5,
+    color: '#666',
+    dashArray: '',
+    fillOpacity: 0.4
+  });
 }
 
 function memberDetailFunction(districtNumber){
