@@ -19,9 +19,11 @@ $(document).ready( function() {
 
 function showInfo(data, tabletop) {
   var scoreColor;
-
-  var sourcebox = $("#senate-template-infobox").html();
+  var defaultText =$("#template-default-text").html();
+  var sourcebox = $("#template-infobox").html();
   app.infoboxTemplate = Handlebars.compile(sourcebox);
+  app.defaultTemplate = Handlebars.compile(defaultText);
+
   $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
 
     MDHouseDistricts[member.district] = member;
@@ -103,7 +105,7 @@ function highlightFeature(e) {
   }
   var html;
 
-  console.log("highlightFeature: ", layer);
+//  console.log("highlightFeature: ", layer);
 
   html = "<div class='highlightFeatureInfo'>";
   html += "<strong> District " + memberDetail.district + "</strong>";
@@ -120,7 +122,7 @@ function highlightFeature(e) {
       weight: 5,
       color: '#666',
       dashArray: '',
-      fillOpacity: 0.7
+      fillOpacity: 0.5
     });
 
     if (!L.Browser.ie && !L.Browser.opera) {
@@ -131,6 +133,9 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
+//  var defaultText=('.default-text')
+  var html = app.defaultTemplate({});
+  $('#sidebar').html(html);
   var layer = e.target;
   houseLayer.resetStyle(layer);
   info.update();

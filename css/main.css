@@ -30,7 +30,7 @@ body {
     padding-bottom: 20px;
 
 }
-.entry-infobox {
+.entry-infobox, .entry-default-text {
     float: right;
     width: 250px;
     border: solid black 1px;
@@ -41,7 +41,7 @@ body {
     line-height: 1.1;
 }
 
-.entry-infobox a {color: #0B8973;}
+.entry-infobox a, .entry-default-text a {color: #0B8973;}
 .entry-header {
     font-weight:bold;
   padding:3px;

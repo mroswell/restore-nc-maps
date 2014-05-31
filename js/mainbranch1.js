@@ -19,9 +19,11 @@ $(document).ready( function() {
 
 function showInfo(data, tabletop) {
   var scoreColor;
-
-  var sourcebox = $("#senate-template-infobox").html();
+  var defaultText =$("#template-default-text").html();
+  var sourcebox = $("#template-infobox").html();
   app.infoboxTemplate = Handlebars.compile(sourcebox);
+  app.defaultTemplate = Handlebars.compile(defaultText);
+
   $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
 
     MDHouseDistricts[member.district] = member;
@@ -103,7 +105,7 @@ function highlightFeature(e) {
   }
   var html;
 
-  console.log("highlightFeature: ", layer);
+//  console.log("highlightFeature: ", layer);
 
   html = "<div class='highlightFeatureInfo'>";
   html += "<strong> District " + memberDetail.district + "</strong>";
@@ -120,7 +122,7 @@ function highlightFeature(e) {
       weight: 5,
       color: '#666',
       dashArray: '',
-      fillOpacity: 0.7
+      fillOpacity: 0.5
     });
 
     if (!L.Browser.ie && !L.Browser.opera) {
@@ -130,6 +132,34 @@ function highlightFeature(e) {
   }
 }
 
+//$('button').click(function() {
+//  var html = app.defaultTemplate({});
+//  $('#sidebar').html(html);
+//  $(this).html("Hide Instructions")
+//});
+
+//var showOrHide = true
+//$( "button" ).toggle ( showOrHide );
+//
+//function showOrHide() {
+//if ( showOrHide === true ) {
+//  var html = app.defaultTemplate({});
+//  $('#sidebar').html(html);
+//  showOrHide=false;
+////  $( "#foo" ).show();
+//} else if ( showOrHide === true ) {
+////  var html = app.defaultTemplate({});
+//  $('#sidebar').hide();
+//  showOrHide
+//}
+//}
+
+$( "button" ).click(function() {
+  $( ".entry-default-text" ).toggle( "slow", function() {
+  var html = app.defaultTemplate({});
+  $('.entry-default-text').html(html);
+  });
+});
 function resetHighlight(e) {
   var layer = e.target;
   houseLayer.resetStyle(layer);
@@ -176,13 +206,12 @@ info.onAdd = function (map) {
 };
 //   // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
-
 };
 
 //new L.Control.Zoom({ position: 'topright' }).addTo(map);
 
 info.setPosition('bottomleft').addTo(map);
-$(document).on("click","button",function(event) {
+$(document).on("click",".close",function(event) {
   event.preventDefault();
   clearInfobox();
   freeze=0;

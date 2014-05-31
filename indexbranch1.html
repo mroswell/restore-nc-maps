@@ -27,14 +27,14 @@
 <link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/print.css" type="text/css" media="print">
 <link rel="stylesheet" href="http://mdlcv.org/templates/system/css/general.css" type="text/css">
 <link rel="shortcut icon" href="http://mdlcv.org/images/favicon.ico">
-<link href="http://w.sharethis.com/button/css/sharethis.f8aeb821aa52b7af5ae4d3675118594c.css" rel="stylesheet" type="text/css">
+<!--<link href="http://w.sharethis.com/button/css/sharethis.f8aeb821aa52b7af5ae4d3675118594c.css" rel="stylesheet" type="text/css">-->
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 </head>
 
-<body class="com_content itemid-" onclick="if(SHARETHIS.buttonClicked==false){SHARETHIS.stopClosing=false;SHARETHIS.openDuration=0;stClose(100);}" id="dummybodyid">
+<body id="dummybodyid">
 
 <div class="wrapper">
   <!-- wides go inside wrapper but outside outer and inner -->
@@ -45,7 +45,7 @@
   </div>
 
   <div class="wide2">
-    <a href="index-2.html"><img src="http://mdlcv.org/templates/mdlcv/images/banner1.gif" width="668" height="77" border="0" alt="MDLCV logo and name banner"></a>
+    <a href="http://mdlcv.org"><img src="http://mdlcv.org/templates/mdlcv/images/banner1.gif" width="668" height="77" border="0" alt="MDLCV logo and name banner"></a>
   </div>
 
 
@@ -60,13 +60,27 @@
       <h2>2014 Endorsement Map<br><small>Primary Election Day is June 24. Early voting is Thursday, June 12 &ndash; Thursday, June 19 (10 am &ndash; 8 am).  </small></h2>
     </div>
     <div class="row" style="margin-left:-30px;">
-      <div id="sidebar" class="col-xs-3"></div>
+      <div id="sidebar" class="col-xs-3 default-text">
+        <div class="entry-default-text" style="padding-top:9px;">
+          <div id=default-text class="body">
+            The map may take several seconds to load. (We think it's worth the wait.)
+            <ul>
+            <li>Mouse over districts to view endorsements</li>
+            <li>Mouse over districts to see streets.</li>
+            <li>Zoom to see streets more clearly</li>
+            <li>Click the district to "freeze" the box.</li> 
+            <li>Unfreeze by clicking the x.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
       <div id="map" class="col-xs-9">
       <!--<div id="map"></div>-->
       </div>
     </div>
     <div class="row">
       <div id="content"></div>
+      <button>Show Instructions</button>
     </div>
   </div><!-- /container -->
 
@@ -84,7 +98,29 @@
 
     <script type="text/javascript" src="js/vendor/tabletop.js"></script>
 
-    <script id="senate-template-infobox" type="text/x-handlebars-template">
+  <script id="template-default-text" type="text/x-handlebars-template">
+    <div class="entry-default-text" style="padding-top:9px;">
+      <div class="body">
+        <p id='close1' class='close'>&times;</p><br>
+        <ul>
+          <li>mouseover districts to view endorsements</li>
+          <li>mouseover districts to see streets.</li>
+          <li>zoom to see streets more clearly</li>
+          <li>Click the district to "freeze" the box.</li>
+          <li>Unfreeze by clicking the x.</li>
+        </ul>
+        <div style=" text-align:center; margin-bottom:1em;">
+          <p style="font-size:12px; padding-top:12px;">
+            Bring this ballot to the poll. <br/>
+            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
+              <span class="icon icon-print"></span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </script>
+
+    <script id="template-infobox" type="text/x-handlebars-template">
       <div class="entry-infobox" style="padding-top:9px;">
         <div class="body">
           <button type='button' id='close' class='close'>&times;</button><br>
