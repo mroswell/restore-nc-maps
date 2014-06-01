@@ -23,12 +23,14 @@
   <meta name="keywords" content="">
   <meta name="description" content="Maryland League of Conservation Voters (LCV) is a non-partisan political voice for the environment. Maryland LCV is best known for our comprehensive yearly scorecard that evaluates the environmental votes of individual state legislators. We also grade the environmental record of the Governor. In addition, we regularly alert the public and the media of key actions of elected officials and closely monitor agencies and executive appointments.">
 
-  <link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/template.css?c=1" type="text/css">
-  <link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/print.css" type="text/css" media="print">
-  <link rel="stylesheet" href="http://mdlcv.org/templates/system/css/general.css" type="text/css">
-  <link rel="shortcut icon" href="http://mdlcv.org/images/favicon.ico">
+  <!--<link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/template.css?c=1" type="text/css">-->
+  <!--<link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/print.css" type="text/css" media="print">-->
+  <!--<link rel="stylesheet" href="http://mdlcv.org/templates/system/css/general.css" type="text/css">-->
+  <link rel="stylesheet" href="css/styles-cleaned.css"/>
+  <link rel="stylesheet" href="css/general.css"/>
+  <!--<link rel="shortcut icon" href="http://mdlcv.org/images/favicon.ico">-->
   <!--<link href="http://w.sharethis.com/button/css/sharethis.f8aeb821aa52b7af5ae4d3675118594c.css" rel="stylesheet" type="text/css">-->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap-cleaned.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
@@ -45,14 +47,17 @@
   </div>
 
   <div class="wide2">
-    <a href="http://mdlcv.org"><img src="http://mdlcv.org/templates/mdlcv/images/banner1.gif" width="668" height="77" border="0" alt="MDLCV logo and name banner"></a>
+    <a href="http://mdlcv.org"><img src="images/banner1.gif" width="668" height="77" border="0" alt="MDLCV logo and name banner"></a>
   </div>
 
 
   <div class="wide3">
     <div class="mainnav">
       <div class="moduletable">
-        <ul id="mainlevelmainnav"><li><a href="http://mdlcv.org" class="mainlevelmainnav"id="active_menumainnav">MDLCV Home</a></li><li><a href="http://mdlcv.org/about/" class="mainlevelmainnav">About</a></li><li><a href="http://mdlcv.org/issues" class="mainlevelmainnav">Issues</a></li><li><a href="https://www.thedatabank.com/dpg/288/donate.asp?formid=donate" class="mainlevelmainnav">Donate</a></li><li><a href="http://mdlcv.org/scorecards/" class="mainlevelmainnav">Scorecards</a></li><li><a href="http://mdlcv.org/elections" class="mainlevelmainnav">Elections</a></li><li><a href="http://mdlcv.org/county-chapters/anne-arrundel/" class="mainlevelmainnav">County Chapters</a></li><li><a href="http://mdlcv.org/latino-outreach-program/2014-03-10-20-56-25" class="mainlevelmainnav">Latino Outreach Program</a></li></ul>		</div>
+        <ul id="mainlevelmainnav"><li><a href="http://mdlcv.org" class="mainlevelmainnav"id="active_menumainnav">MDLCV Home</a>
+        </li><button style="display: inline; float:left; margin-right:40px" class="mainlevelmainnav">Map Help</button><li><a href="http://mdlcv.org/about/" class="mainlevelmainnav">About</a></li><li><a href="http://mdlcv.org/issues" class="mainlevelmainnav">Issues</a></li><li><a href="https://www.thedatabank.com/dpg/288/donate.asp?formid=donate" class="mainlevelmainnav">Donate</a></li><li><a href="http://mdlcv.org/scorecards/" class="mainlevelmainnav">Scorecards</a></li><li><a href="http://mdlcv.org/elections" class="mainlevelmainnav">Elections</a></li><li><a href="http://mdlcv.org/county-chapters/anne-arrundel/" class="mainlevelmainnav">County Chapters</a></li><li><a href="http://mdlcv.org/latino-outreach-program/2014-03-10-20-56-25" class="mainlevelmainnav">Latino Outreach Program</a></li></ul>
+
+      </div>
     </div>
   </div><!-- end row 3 -->
   <div class="container">
@@ -64,14 +69,13 @@
       <div id="sidebar" class="col-xs-3 default-text">
         <div class="entry-default-text" style="padding-top:9px; display:block;">
           <div id=default-text class="body">
+            <p id='close1' class='close'>&times;</p><br>
             <h5 style="text-align: center">Welcome</h5>
             <ul>
-              <li>The map may take several seconds to load. (We think it's worth the wait.)</li>
-              <li>Mouse over districts to<strong> view endorsements</strong></li>
-              <li>Mouse over districts to <strong>see streets</strong>.</li>
-              <li><strong>Zoom</strong> to see streets more clearly</li>
-              <li>Click the district to <strong>"freeze" the box.</strong></li>
-              <li><strong>Click the 'x'</strong> to dismiss the box.</li>
+              <li>The map takes several seconds to load. (We think it's worth the wait.)</li>
+              <li>Mouse over districts<br />to<strong> view endorsements</strong> and <strong>see streets</strong></li>
+              <li><strong>Zoom, then mouse over</strong> to see streets more clearly</li>
+              <li>Click a district to <strong>"freeze" the endorsement panel.</strong> Click the 'x' to dismiss the panel.</li>
             </ul>
           </div>
         </div>
@@ -83,7 +87,6 @@
     </div>
     <div class="row">
       <div id="content"></div>
-      <button>Show Helpful Hints</button>
     </div>
   </div><!-- /container -->
 
@@ -105,21 +108,15 @@
     <div class="entry-default-text" style="padding-top:9px;">
       <div class="body">
         <p id='close1' class='close'>&times;</p><br>
-        <h5 style="text-align: center">Helpful Hints</h5>
+        <h5 style="text-align: center">Map Help</h5>
         <ul>
-          <li>Mouse over districts to<strong> view endorsements</strong></li>
-          <li>Mouse over districts to <strong>see streets</strong>.</li>
-          <li><strong>Zoom</strong> to see streets more clearly</li>
-          <li>Click the district to <strong>"freeze" the box.</strong></li>
-          <li><strong>Click the 'x'</strong> to dismiss the box.</li>
+          <li>Mouse over districts<br />to<strong> view endorsements</strong> and <strong>see streets</strong></li>
+          <li>Zoom, then mouse over to see streets more clearly</li>
+          <li>Click a district to <strong>"freeze" the endorsement panel.</strong> Click the 'x' to dismiss the panel.</li>
+
+
         </ul>
-        <div style=" text-align:center; margin-bottom:1em;">
-          <p style="font-size:12px; padding-top:12px;">
-            Bring this ballot to the poll. <br/>
-            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
-              <span class="icon icon-print"></span></a>
-          </p>
-        </div>
+
       </div>
     </div>
   </script>
@@ -127,7 +124,7 @@
   <script id="template-infobox" type="text/x-handlebars-template">
     <div class="entry-infobox" style="padding-top:9px;">
       <div class="body">
-        <button type='button' id='close' class='close'>&times;</button><br>
+        <p  id='close' class='close'>&times;</p><br>
 
         <strong>District {{{district}}} Endorsements</strong><br />
         <p class="entry-header">Governor</p>

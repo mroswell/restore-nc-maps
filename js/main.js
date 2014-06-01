@@ -9,7 +9,15 @@ var latitude = 38.82;
 var longitude = -77.28;
 var latLng = new L.LatLng(latitude, longitude);
 var sidebar = $('#sidebar');
-var map = L.map('map').setView(latLng, 8);
+var map = L.map('map')
+  .setView(latLng, 8);
+//    .fitBounds([
+//  [38, -78],
+//  [39, -74.125]
+//    [40.712, -74.227],
+//  [40.774, -74.125]
+//])
+//  ;
 
 $(document).ready( function() {
   Tabletop.init( { key: public_spreadsheet_url,
@@ -160,6 +168,15 @@ $( "button" ).click(function() {
   var html = app.defaultTemplate({});
   $('#sidebar').html(html);
 });
+
+//$( "#sidebar:empty") (function() {
+//  var html = app.defaultTemplate({});
+//  $('#sidebar').html(html);
+//});
+
+
+
+
 function resetHighlight(e) {
   var layer = e.target;
   houseLayer.resetStyle(layer);

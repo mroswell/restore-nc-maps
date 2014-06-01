@@ -1,0 +1,313 @@
+/* -------------- basic page setup ---------------- */
+
+body {
+    background-color: #0B8973;
+    text-align: center;
+    font-family: arial,verdana,helvetica,sans-serif;
+    font-size: 86%;
+    font-weight: normal;
+    margin: 0;
+}
+
+
+/* -------------- display, clear, float, align ---------------- */
+
+.clear { clear: both; }
+
+
+
+/* -------------- 3 column layout --------- */
+
+
+/* total width */
+
+.wrapper {
+    width: 800px;
+    border: 0;
+    margin: 0 auto;
+    background-color: #fff;
+    text-align: left;
+}
+
+
+/* this is a border with marginal compensation to stop scroll bars */
+
+
+
+.centercontent { float: left; width: 98%; position: relative; z-index: 12; padding-top:10px; padding-left: 10px; padding-bottom:10px;}.left {
+                                                                                                                                          width: 149px;              /* left column width */
+                                                                                                                                          margin-left: -149px;       /* _negative_ left column width */
+                                                                                                                                      }
+
+
+/* wide divs */
+
+.wide1 {
+    background-color: #0B8973;
+    color: #fff;
+    height: 22px;
+    position: relative;
+    padding: 0;
+    margin: 0;   /* header and footer colours */
+}
+
+.wide2 {
+    background-color: #036;
+    border-bottom: 1px solid #9cf;
+    border-top: 1px solid #fff;  /* header and footer colours */
+    position: relative;
+}
+
+.wide3 {
+    background-color:#69c;
+    height:22px;
+    line-height: 22px;
+    position: relative;
+    border-bottom: 1px solid #fff;
+    width:800px;
+}
+
+.wide4 {
+    background-color: #69c;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    font: 0.9em arial,verdana,helvetica,sans-serif;
+    padding: 10px 0;
+    border-bottom: 1px solid #fff;
+    margin:0 auto;
+    width:800px;
+}
+
+.wide5 {
+    background-color: #036;
+    color: #69c;
+    text-align: center;
+    position: relative;
+    padding: 10px 0;
+    margin:0 auto;
+    width:800px;
+    font: 0.9em arial,verdana,helvetica,sans-serif;
+}
+
+
+/* wide details */
+
+
+
+
+
+/* top menu */
+
+ul#mainleveltopnav {
+    list-style: none;
+    height: 22px;
+    padding: 0; margin:0;
+    float: right;
+}
+
+ul#mainleveltopnav li {
+    float: left;
+    text-align:center;
+}
+
+ul#mainleveltopnav li a:link, ul#mainleveltopnav li a:visited {
+    height: 22px;
+    line-height: 22px;
+    display: block;
+    border-left: 1px solid #9cc;
+    padding: 4px 23px 0 24px;
+    margin:0;
+    font: bold 0.9em arial,verdana,helvetica,sans-serif;
+    color: #fff;
+    background-color: #69c;
+}
+
+ul#mainleveltopnav li a:hover,
+ul#mainleveltopnav li a:active {
+    background-color: #036;
+}
+
+
+
+/* main menu */
+
+/*.moduletablemainnav {padding:0;margin:0;}*/
+
+
+ul#mainlevelmainnav {
+    list-style: none;
+    height: 22px;
+    margin: 0 0 0 14px;
+    padding: 0;
+    float: left;
+}
+
+ul#mainlevelmainnav li {
+    float: left;
+    text-align:center;
+}
+
+ul#mainlevelmainnav li a:link, ul#mainlevelmainnav li a:visited{
+    height: 18px;
+    line-height: 18px;
+    display: block;
+    border-left: 1px solid #9cc;
+    padding: 4px 25px 0 16px;
+    margin:0;
+    font: bold 0.9em arial,verdana,helvetica,sans-serif;
+    color: #fff;
+    background-color: #69c;
+}
+
+
+ul#mainlevelmainnav li a:hover,
+ul#mainlevelmainnav li a:active {
+    background-color: #036;
+}
+
+.wide4 a:link, .wide4 a:visited, .wide4 a:hover, .wide4 a:active {
+    font: 1.0em/1.6em arial,verdana,helvetica,sans-serif;
+    color: #fff;
+    padding: 0px 20px 0px 20px;}
+
+
+.wide5 a:link, .wide5 a:visited, .wide5 a:hover, .wide5 a:active {
+    font: 1.0em/1.6em arial,verdana,helvetica,sans-serif;
+    color: #69c;
+    padding: 0px 20px 0px 20px;
+}
+
+
+/* Mozilla code */
+
+
+ { margin-right: 1px; }
+�
+
+
+
+ {font: 0.8em arial,verdana,helvetica,sans-serif;}.rss_table {
+                                                                border-bottom: 1px solid #006633;
+                                                            }
+
+
+
+
+h1 { font: 1.7em "Trebuchet MS",trebuchet,arial,verdana,helvetica,sans-serif; margin: 0 0 10px 0; text-align: left;}
+
+h2 { font: bold 1.2em Georgia,arial,verdana,helvetica,sans-serif; padding: 0 0 5px 0; margin: 0; }
+
+h3 { font: bold 1em arial,verdana,helvetica,sans-serif; padding: 10px 0 3px 0; margin: 0; color: #0B8973;}
+
+h4 { font: bold 1em arial,verdana,helvetica,sans-serif; padding: 10px 0 5px 0; margin: 0;}
+
+ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
+
+li { padding: 0 0 1em 0; margin 0;}.contentpaneopen ul { font-size: 1em; padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
+
+
+a:link {
+    text-decoration: none;
+    font-family: arial,verdana,helvetica,sans-serif;
+    color: #00c;
+}
+
+a:visited {
+    text-decoration: none;
+    font-family: arial,verdana,helvetica,sans-serif;
+    color: #00c;
+}
+
+a:hover {
+    text-decoration: none;
+    font-family: arial,verdana,helvetica,sans-serif;
+    color: #00c;
+}
+
+a:active {
+    text-decoration: none;
+    font-family: arial,verdana,helvetica,sans-serif;
+    color: #00c;
+}
+
+
+
+/* -------------- Read More Links --------- */a.readon:link {
+                                                  text-decoration: none;
+                                                  font: 0.9em arial,verdana,helvetica,sans-serif;
+                                                  color: #00c;
+                                              }
+
+
+
+
+
+
+/* -------------- Right Column ---------------- */
+
+
+.rightinternaltext {
+     font: 0.9em arial,verdana,helvetica,sans-serif;
+     padding-left:5px;
+ }
+
+
+
+
+
+
+.moduletable ul li {
+    margin-left: -1em;
+    padding-left 0;
+}
+
+
+
+
+
+
+
+/* -------------- Homepage --------- */
+
+
+
+
+
+
+/*************** index page left column ****************/
+
+
+
+
+ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
+.moduletable ul {
+    margin-top:10px;
+    margin-bottom:15px;
+    list-style: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif);
+}
+
+.moduletable li { margin-left: -10px; }
+
+
+
+
+/************ map navigation **************/
+
+ul.pureCssMenu {
+     display:block;
+     zoom:1;
+     float: left;
+ }
+
+
+
+
+/******************* map help popup *********************/
+
+
+/****************** remove sidebars for scorecard map pages **************/
+
+
+/********** remove header on 2013 scorecard landing page ****************/
+
