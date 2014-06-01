@@ -26,7 +26,6 @@ $(document).ready( function() {
 });
 
 function showInfo(data, tabletop) {
-  var scoreColor;
   var defaultText =$("#template-default-text").html();
   var sourcebox = $("#template-infobox").html();
   app.infoboxTemplate = Handlebars.compile(sourcebox);
@@ -140,42 +139,17 @@ function highlightFeature(e) {
   }
 }
 
-//$('button').click(function() {
-//  var html = app.defaultTemplate({});
-//  $('#sidebar').html(html);
-//  $(this).html("Hide Instructions")
-//});
-
-//var showOrHide = true
-//$( "button" ).toggle ( showOrHide );
-//
-//function showOrHide() {
-//if ( showOrHide === true ) {
-//  var html = app.defaultTemplate({});
-//  $('#sidebar').html(html);
-//  showOrHide=false;
-////  $( "#foo" ).show();
-//} else if ( showOrHide === true ) {
-////  var html = app.defaultTemplate({});
-//  $('#sidebar').hide();
-//  showOrHide
-//}
-//}
-
-$( "button" ).click(function() {
-//  $( ".entry-default-text" ).toggle( "slow", function() {
-//  $(this).show();
+$("button").click(function() {
   var html = app.defaultTemplate({});
   $('#sidebar').html(html);
+  freeze=false;
 });
 
-//$( "#sidebar:empty") (function() {
-//  var html = app.defaultTemplate({});
-//  $('#sidebar').html(html);
-//});
-
-
-
+$("button").hover(function() {
+  var html = app.defaultTemplate({});
+  $('#sidebar').html(html);
+  freeze=false;
+});
 
 function resetHighlight(e) {
   var layer = e.target;
@@ -196,6 +170,8 @@ function mapMemberDetailClick(e) {
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
   console.log("mapMemberDetailClick: ", districtNumber);
   var member = memberDetailFunction(districtNumber);
+console.log("::::::",e);
+  console.log(boundary.getBounds().toBBoxString());
 
   boundary.setStyle({
     weight: 5,
