@@ -118,3 +118,5 @@ button.close {margin-top: -4px;margin-right: -8px; }
 .icon-star {
     font-weight: bold;
 }
+
+#sidebar ul {padding:0 1.5em;}

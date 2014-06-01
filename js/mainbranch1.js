@@ -47,7 +47,7 @@ var geoStyle = function(data) {
   //console.log('-------------------');
 
   var houseDistrict = MDHouseDistricts[sldlst];
-  //console.log('houseDistrict', houseDistrict);
+ console.log('houseDistrict', houseDistrict);
 
   var color = 'white';
 
@@ -155,10 +155,10 @@ function highlightFeature(e) {
 //}
 
 $( "button" ).click(function() {
-  $( ".entry-default-text" ).toggle( "slow", function() {
-  var html = app.defaultTemplate({});
-  $('.entry-default-text').html(html);
-  });
+//  $( ".entry-default-text" ).toggle( "slow", function() {
+//  $(this).show();
+      var html = app.defaultTemplate({});
+  $('#sidebar').html(html);
 });
 function resetHighlight(e) {
   var layer = e.target;

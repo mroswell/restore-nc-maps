@@ -18,23 +18,23 @@
   <script type="text/javascript" src="js/vendor/handlebars.js"></script>
   <script src="maps/tl_rd13_24_sldl_7-ms-ms.js"></script>
   <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-<!--<base>-->
-<meta name="robots" content="index, follow">
-<meta name="keywords" content="">
-<meta name="description" content="Maryland League of Conservation Voters (LCV) is a non-partisan political voice for the environment. Maryland LCV is best known for our comprehensive yearly scorecard that evaluates the environmental votes of individual state legislators. We also grade the environmental record of the Governor. In addition, we regularly alert the public and the media of key actions of elected officials and closely monitor agencies and executive appointments.">
+  <!--<base>-->
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="">
+  <meta name="description" content="Maryland League of Conservation Voters (LCV) is a non-partisan political voice for the environment. Maryland LCV is best known for our comprehensive yearly scorecard that evaluates the environmental votes of individual state legislators. We also grade the environmental record of the Governor. In addition, we regularly alert the public and the media of key actions of elected officials and closely monitor agencies and executive appointments.">
 
-<link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/template.css?c=1" type="text/css">
-<link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/print.css" type="text/css" media="print">
-<link rel="stylesheet" href="http://mdlcv.org/templates/system/css/general.css" type="text/css">
-<link rel="shortcut icon" href="http://mdlcv.org/images/favicon.ico">
-<link href="http://w.sharethis.com/button/css/sharethis.f8aeb821aa52b7af5ae4d3675118594c.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  <link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/template.css?c=1" type="text/css">
+  <link rel="stylesheet" href="http://mdlcv.org/templates/mdlcv/css/print.css" type="text/css" media="print">
+  <link rel="stylesheet" href="http://mdlcv.org/templates/system/css/general.css" type="text/css">
+  <link rel="shortcut icon" href="http://mdlcv.org/images/favicon.ico">
+  <!--<link href="http://w.sharethis.com/button/css/sharethis.f8aeb821aa52b7af5ae4d3675118594c.css" rel="stylesheet" type="text/css">-->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
 </head>
 
-<body class="com_content itemid-" onclick="if(SHARETHIS.buttonClicked==false){SHARETHIS.stopClosing=false;SHARETHIS.openDuration=0;stClose(100);}" id="dummybodyid">
+<body id="dummybodyid">
 
 <div class="wrapper">
   <!-- wides go inside wrapper but outside outer and inner -->
@@ -45,7 +45,7 @@
   </div>
 
   <div class="wide2">
-    <a href="index-2.html"><img src="http://mdlcv.org/templates/mdlcv/images/banner1.gif" width="668" height="77" border="0" alt="MDLCV logo and name banner"></a>
+    <a href="http://mdlcv.org"><img src="http://mdlcv.org/templates/mdlcv/images/banner1.gif" width="668" height="77" border="0" alt="MDLCV logo and name banner"></a>
   </div>
 
 
@@ -60,70 +60,110 @@
       <h2>2014 Endorsement Map<br><small>Primary Election Day is June 24. Early voting is Thursday, June 12 &ndash; Thursday, June 19 (10 am &ndash; 8 am).  </small></h2>
     </div>
     <div class="row" style="margin-left:-30px;">
-      <div id="sidebar" class="col-xs-3"></div>
+
+      <div id="sidebar" class="col-xs-3 default-text">
+        <div class="entry-default-text" style="padding-top:9px; display:block;">
+          <div id=default-text class="body">
+            <h5 style="text-align: center">Welcome</h5>
+            <ul>
+              <li>The map may take several seconds to load. (We think it's worth the wait.)</li>
+              <li>Mouse over districts to<strong> view endorsements</strong></li>
+              <li>Mouse over districts to <strong>see streets</strong>.</li>
+              <li><strong>Zoom</strong> to see streets more clearly</li>
+              <li>Click the district to <strong>"freeze" the box.</strong></li>
+              <li><strong>Click the 'x'</strong> to dismiss the box.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
       <div id="map" class="col-xs-9">
-      <!--<div id="map"></div>-->
+        <!--<div id="map"></div>-->
       </div>
     </div>
     <div class="row">
       <div id="content"></div>
+      <button>Show Helpful Hints</button>
     </div>
   </div><!-- /container -->
 
 
-    <!--[if lt IE 7]>
-    <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
-    <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
 
-    <script src="js/main.js"></script>
+  <script src="js/main.js"></script>
 
-    <script type="text/javascript" src="js/vendor/tabletop.js"></script>
+  <script type="text/javascript" src="js/vendor/tabletop.js"></script>
 
-    <script id="senate-template-infobox" type="text/x-handlebars-template">
-      <div class="entry-infobox" style="padding-top:9px;">
-        <div class="body">
-          <button type='button' id='close' class='close'>&times;</button><br>
-
-          <strong>District {{{district}}} Endorsements</strong><br />
-          <p class="entry-header">Governor</p>
-          <p class="icon icon-check"> {{{governor}}}</p><br />
-          <p class="entry-header">Attorney General</p>
-
-          <p class="icon icon-check"> {{{attorneygeneral}}}</p><br />
-          <p class="entry-header">Comptroller</p>
-
-          <p class="icon icon-check"> {{{comptroller}}}</p><br />
-          {{#if senator}}
-          <p class="entry-header">Senate</p>
-          <p class="icon icon-check"> {{{senator}}}</p><br />{{/if}}
-          {{#if delegate}}
-          <p class="entry-header">House</p>
-          <p class="icon icon-check"> {{{delegate}}}</p>
-          <br>{{/if}}
-          {{#if delegate2}}<p class="icon icon-check"> {{{delegate2}}}</p><br />{{/if}}
-          {{#if delegate3}}<p class="icon icon-check"> {{{delegate3}}}</p><br />{{/if}}
-          {{#if delegate4}}<p class="icon icon-check"> {{{delegate4}}}<br />{{/if}}</p>
-          {{#if description}}
-          <p class="entry-header"> <span class="icon icon-star"> <strong>MDLCV Priority Race</strong></span> <span class="icon icon-star"></span></p>
-          {{{description}}}<br>{{/if}}
-          <div style=" text-align:center; margin-bottom:1em;">
-            <p style="font-size:12px; padding-top:12px;">
-              Bring this ballot to the poll. <br/>
-              <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
-                <span class="icon icon-print"></span></a>
-            </p>
-          </div>
+  <script id="template-default-text" type="text/x-handlebars-template">
+    <div class="entry-default-text" style="padding-top:9px;">
+      <div class="body">
+        <p id='close1' class='close'>&times;</p><br>
+        <h5 style="text-align: center">Helpful Hints</h5>
+        <ul>
+          <li>Mouse over districts to<strong> view endorsements</strong></li>
+          <li>Mouse over districts to <strong>see streets</strong>.</li>
+          <li><strong>Zoom</strong> to see streets more clearly</li>
+          <li>Click the district to <strong>"freeze" the box.</strong></li>
+          <li><strong>Click the 'x'</strong> to dismiss the box.</li>
+        </ul>
+        <div style=" text-align:center; margin-bottom:1em;">
+          <p style="font-size:12px; padding-top:12px;">
+            Bring this ballot to the poll. <br/>
+            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
+              <span class="icon icon-print"></span></a>
+          </p>
         </div>
       </div>
-    </script>
-    <!-- /container -->
-  </div>
-  <div class="clear"></div>
+    </div>
+  </script>
+
+  <script id="template-infobox" type="text/x-handlebars-template">
+    <div class="entry-infobox" style="padding-top:9px;">
+      <div class="body">
+        <button type='button' id='close' class='close'>&times;</button><br>
+
+        <strong>District {{{district}}} Endorsements</strong><br />
+        <p class="entry-header">Governor</p>
+        <p class="icon icon-check"> {{{governor}}}</p><br />
+        <p class="entry-header">Attorney General</p>
+
+        <p class="icon icon-check"> {{{attorneygeneral}}}</p><br />
+        <p class="entry-header">Comptroller</p>
+
+        <p class="icon icon-check"> {{{comptroller}}}</p><br />
+        {{#if senator}}
+        <p class="entry-header">Senate</p>
+        <p class="icon icon-check"> {{{senator}}}</p><br />{{/if}}
+        {{#if delegate}}
+        <p class="entry-header">House</p>
+        <p class="icon icon-check"> {{{delegate}}}</p>
+        <br>{{/if}}
+        {{#if delegate2}}<p class="icon icon-check"> {{{delegate2}}}</p><br />{{/if}}
+        {{#if delegate3}}<p class="icon icon-check"> {{{delegate3}}}</p><br />{{/if}}
+        {{#if delegate4}}<p class="icon icon-check"> {{{delegate4}}}<br />{{/if}}</p>
+        {{#if description}}
+        <p class="entry-header"> <span class="icon icon-star"> <strong>MDLCV Priority Race</strong></span> <span class="icon icon-star"></span></p>
+        {{{description}}}<br>{{/if}}
+        <div style=" text-align:center; margin-bottom:1em;">
+          <p style="font-size:12px; padding-top:12px;">
+            Bring this ballot to the poll. <br/>
+            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
+              <span class="icon icon-print"></span></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </script>
+  <!-- /container -->
+</div>
+<div class="clear"></div>
 
 <div class="wide4">
   <!--<a href="index-2.html">Home</a> <span class="smallvertline">|</span>-->
@@ -161,11 +201,11 @@
 
   <!--&lt;!&ndash; Google Analytics: change UA-XXXXX-X to be your site's ID. &ndash;&gt;-->
   <!--<script>-->
-    <!--(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=-->
-        <!--function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;-->
-      <!--e=o.createElement(i);r=o.getElementsByTagName(i)[0];-->
-      <!--e.src='//www.google-analytics.com/analytics.js';-->
-      <!--r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));-->
-    <!--ga('create','UA-XXXXX-X');ga('send','pageview');-->
+  <!--(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=-->
+  <!--function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;-->
+  <!--e=o.createElement(i);r=o.getElementsByTagName(i)[0];-->
+  <!--e.src='//www.google-analytics.com/analytics.js';-->
+  <!--r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));-->
+  <!--ga('create','UA-XXXXX-X');ga('send','pageview');-->
   <!--</script>-->
 </div></body></html>
