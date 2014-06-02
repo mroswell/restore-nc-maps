@@ -205,7 +205,6 @@ function memberDetailFunction(districtNumber){
 
 }
 
-
 function mapDblClick(e) {
   var layer = e.target;
   var districtNumber = layer.feature.properties.SLDLST;
