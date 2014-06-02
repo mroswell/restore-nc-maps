@@ -1,6 +1,6 @@
 var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
 
-var frozenDist;
+var dist;
 var freeze=0;
 var MDHouseDistricts = {};
 var app = {};
@@ -57,28 +57,17 @@ var geoStyle = function(data) {
   console.log('houseDistrict', houseDistrict);
 
   var color = 'white';
-  var opacity = .50;
 
   if(houseDistrict) {
     color = houseDistrict.colormethod;
-    if (color =="#FFFFBF") {
-      console.log(color);
-//      color= '#ffe9c3';
-      color= '#fff4c1';
-//      color = '#FFCD76';
-    }
 //    color='#0B8973';
-  }
-console.log('housedistrict.....', houseDistrict.district);
-  if (houseDistrict.district==43 ) {
-    opacity = 0.1;
   }
 
   return {
     fillColor: color,
     weight: 1,
-    opacity: opacity,
-    color: '#555555',
+    opacity: 0.51,
+    color: '#333333',
     dashArray: '0',
     fillOpacity: 1
   }
@@ -112,7 +101,24 @@ function onEachFeature(feature, layer) {
   });
 }
 
+function mapDblClick(e) {
+  var layer = e.target;
+  var districtNumber = layer.feature.properties.SLDLST;
+  districtNumber = districtNumber.replace(/^0+/, '');
 
+
+  var bbox = layer.getBounds();
+  console.log("bbox",bbox);
+  map.fitBounds(bbox);
+  layer.setStyle({
+    weight: 5,
+    color: '#666',
+    dashArray: '',
+    fillOpacity: 0.3
+  });
+  console.log("DBL", bbox.toBBoxString())
+  mapMemberDetailClick(e);
+}
 
 function highlightFeature(e) {
   var layer = e.target;
@@ -161,16 +167,6 @@ function resetHighlight(e) {
   if (!freeze) {
     clearInfobox();
   }
-// else {
-//    if (layer == frozenDist) {
-//    layer.setStyle({
-//      weight: 5,
-//      color: 'orange',
-//      dashArray: '',
-//      fillOpacity: 0.4
-//    });
-//  }
-//  }
 }
 
 function clearInfobox() {
@@ -180,8 +176,6 @@ function clearInfobox() {
 function mapMemberDetailClick(e) {
   freeze=1;
   var boundary = e.target;
-  frozenDist = _.clone(boundary);
-  console.log("FrOZEN", frozenDist);
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
   console.log("mapMemberDetailClick: ", districtNumber);
   var member = memberDetailFunction(districtNumber);
@@ -203,25 +197,6 @@ function memberDetailFunction(districtNumber){
   // 2. Insert the rendered template into #sidebar
   $('#sidebar').html(html);
 
-}
-
-
-function mapDblClick(e) {
-  var layer = e.target;
-  var districtNumber = layer.feature.properties.SLDLST;
-  districtNumber = districtNumber.replace(/^0+/, '');
-
-  var bbox = layer.getBounds();
-  console.log("bbox",bbox);
-  map.fitBounds(bbox);
-  layer.setStyle({
-    weight: 5,
-    color: '#666',
-    dashArray: '',
-    fillOpacity: 0.3
-  });
-  console.log("DBL", bbox.toBBoxString())
-  mapMemberDetailClick(e);
 }
 
 var info = L.control();

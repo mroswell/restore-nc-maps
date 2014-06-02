@@ -202,9 +202,10 @@ h3 { font: bold 1em arial,verdana,helvetica,sans-serif; padding: 10px 0 3px 0; m
 
 h4 { font: bold 1em arial,verdana,helvetica,sans-serif; padding: 10px 0 5px 0; margin: 0;}
 
-ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/images/blackarrow.gif); list-style-type: disc;}
+ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url('../images/triangle.gif'); list-style-type: disc;}
 
-li { padding: 0 0 1em 0; margin 0;}.contentpaneopen ul { font-size: 1em; padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/images/blackarrow.gif); list-style-type: disc;}
+li { padding: 0 0 1em 0; margin: 0;}
+.contentpaneopen ul { font-size: 1em; padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url('../images/triangle.gif'); list-style-type: disc;}
 
 
 a:link {
@@ -259,7 +260,7 @@ a:active {
 
 .moduletable ul li {
     margin-left: -1em;
-    padding-left 0;
+    padding-left: 0;
 }
 
 
@@ -280,11 +281,11 @@ a:active {
 
 
 
-ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
+ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(../images/triangle.gif); list-style-type: disc;}
 .moduletable ul {
     margin-top:10px;
     margin-bottom:15px;
-    list-style: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif);
+    list-style: url('../images/triangle.gif');
 }
 
 .moduletable li { margin-left: -10px; }

@@ -2025,9 +2025,11 @@ select[multiple].input-lg {
 .btn.active {
   background-image: none;
   outline: 0;
-  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-          box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-}
+  -webkit-box-shadow: inset 0 3px 5px rgba(255, 244, 193, .125);
+          box-shadow: inset 0 3px 5px rgba(255, 244, 193, .125);
+/*}  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);*/
+          /*box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);*/
+/*}*/
 .btn.disabled,
 .btn[disabled],
 fieldset[disabled] .btn {

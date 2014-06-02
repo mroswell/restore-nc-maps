@@ -77,8 +77,10 @@ h2 {
 .wide4 a:link, .wide4 a:visited, .wide4 a:hover, .wide4 a:active {
     padding: 0 17px;
 }
-button.close {margin-top: -4px;margin-right: -8px; }
+p.close {margin-top: -4px;margin-right: -8px; }
+button  {background-color: #fff4c1;border: 2px outset #fff4c1;}
 
+    }
 .my-legend .legend-title {
     text-align: left;
     margin-bottom: 8px;
