@@ -16,13 +16,13 @@
 
   <!--<link rel="stylesheet" href="css/bootstrap-theme.min.css">-->
   <link rel="stylesheet" href="css/main.css">
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  <script src="node_modules/leaflet/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
 
   <script type="text/javascript" src="js/vendor/handlebars.js"></script>
-  <script src="maps/tl_rd13_24_sldl_7-ms-ms.js"></script>
-  <script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />
+  <!--<script src="maps/tl_rd13_24_sldl_7-ms-ms.js"></script>-->
+  <!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>-->
+  <!--<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />-->
 
   <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
@@ -34,10 +34,13 @@
     <h2>Maryland League of Conservation Voters  <br><small>2014 Endorsement Map</small></h2>
   </div>
   <div class="row">
-    <div id="main" class="col-xs-9">
-      <div id="map"></div>
-    </div>
-    <div id="sidebar" class="col-xs-3"></div>
+    <!--<div id="main" class="col-xs-9">-->
+      <!--<div id="map"></div>-->
+    <!--</div>-->
+    <div id="sidebar1" class="sidebar col-xs-4"></div>
+    <div id="sidebar2" class="sidebar col-xs-4"></div>
+    <div id="sidebar3" class="sidebar col-xs-4"></div>
+
   </div>
   <div class="row">
     <div id="content"></div>
@@ -101,7 +104,7 @@
     var sourcebox = $("#senate-template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     var html = app.infoboxTemplate(districtDetail);
-    $('#sidebar').html(html);
+    $('.sidebar').html(html);
     // $('#sidebar').html(JSON.stringify(districtDetail));
   }
 
@@ -120,10 +123,9 @@
 
 
 <script id="senate-template-infobox" type="text/x-handlebars-template">
-  <div class="entry-infobox" style="padding-top:9px;">
+  <div class="entry-infobox" style="width:auto; padding-top:9px;">
     <div class="body">
-      <button type='button' id='close' class='close'>&times;</button><br>
-
+      <img src="images/" alt=""/>
       <strong>District {{{district}}} Endorsements</strong><br />
       <p class="entry-header">Governor</p>
       <p class="icon icon-check"> {{{governor}}}</p><br />

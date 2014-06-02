@@ -41,6 +41,7 @@ body {
     line-height: 1.1;
 }
 
+
 .entry-infobox a, .entry-default-text a {color: #0B8973;}
 .entry-header {
     font-weight:bold;
@@ -78,9 +79,16 @@ h2 {
     padding: 0 17px;
 }
 p.close {margin-top: -4px;margin-right: -8px; }
-button  {background-color: #fff4c1;border: 2px outset #fff4c1;}
 
-    }
+#map-help, #endorsement-process  {
+    background-color: #fff4c1;
+    border: 2px outset #fff4c1;
+    margin-right: 22px;
+    display: inline;
+    float:left;
+}
+
+
 .my-legend .legend-title {
     text-align: left;
     margin-bottom: 8px;
