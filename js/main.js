@@ -1,9 +1,9 @@
 var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
 
+var app = {};
+var MDHouseDistricts = {};
 var frozenDist;
 var freeze=0;
-var MDHouseDistricts = {};
-var app = {};
 var houseLayer;
 var latitude = 38.82;
 var longitude = -77.28;
@@ -11,13 +11,9 @@ var latLng = new L.LatLng(latitude, longitude);
 var sidebar = $('#sidebar');
 var map = L.map('map')
   .setView(latLng, 8);
-//    .fitBounds([
-//  [38, -78],
-//  [39, -74.125]
-//    [40.712, -74.227],
-//  [40.774, -74.125]
-//])
-//  ;
+var $mapHelp = $("#map-help");
+var $endorseHelp = $("#endorsement-process")
+
 
 $(document).ready( function() {
   Tabletop.init( { key: public_spreadsheet_url,
@@ -28,8 +24,10 @@ $(document).ready( function() {
 function showInfo(data, tabletop) {
   var defaultText =$("#template-default-text").html();
   var sourcebox = $("#template-infobox").html();
+  var endorseText = $("#template-endorse-text").html();
   app.infoboxTemplate = Handlebars.compile(sourcebox);
   app.defaultTemplate = Handlebars.compile(defaultText);
+  app.endorseTemplate = Handlebars.compile(endorseText);
 
   $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
 
@@ -211,7 +209,6 @@ function mapDblClick(e) {
   districtNumber = districtNumber.replace(/^0+/, '');
 
   var bbox = layer.getBounds();
-  console.log("bbox",bbox);
   map.fitBounds(bbox);
   layer.setStyle({
     weight: 5,
@@ -219,7 +216,7 @@ function mapDblClick(e) {
     dashArray: '',
     fillOpacity: 0.3
   });
-  console.log("DBL", bbox.toBBoxString())
+//  console.log("DBL", bbox.toBBoxString())
   mapMemberDetailClick(e);
 }
 
@@ -234,22 +231,33 @@ info.onAdd = function (map) {
 info.update = function (props) {
 };
 
-//new L.Control.Zoom({ position: 'topright' }).addTo(map);
-
-
 info.setPosition('bottomleft').addTo(map);
 
-$("button").click(function() {
+
+$mapHelp.click(function() {
   var html = app.defaultTemplate({});
   $('#sidebar').html(html);
   freeze=false;
 });
 
-$("button").hover(function() {
+$mapHelp.hover(function() {
   var html = app.defaultTemplate({});
   $('#sidebar').html(html);
   freeze=false;
 });
+
+$endorseHelp.click(function() {
+  var html = app.endorseTemplate({});
+  $('#sidebar').html(html);
+  freeze=false;
+});
+
+$endorseHelp.hover(function() {
+  var html = app.endorseTemplate({});
+  $('#sidebar').html(html);
+  freeze=false;
+});
+
 $(document).on("click",".close",function(event) {
   event.preventDefault();
   clearInfobox();

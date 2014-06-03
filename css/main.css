@@ -59,7 +59,7 @@ body {
     padding-bottom: 20px;
 
 }
-button {}
+button {font: bold 0.9em arial,verdana,helvetica,sans-serif;}
 #sidebar ul {padding:0 1.2em;}
 
 .entry-infobox, .entry-default-text {
