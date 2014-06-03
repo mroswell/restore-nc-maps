@@ -6,9 +6,7 @@
 /** {*/
 /*@icon-font-path: "fonts/";*/
     /*}*/
-.modal {
-    display:block;
-}
+.btn-primary {background-color: #0B8973;}
 a:visited {color:#0B8973;}
 
 .wrapper {width:1100px;}

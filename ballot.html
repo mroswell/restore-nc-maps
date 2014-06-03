@@ -11,36 +11,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="css/bootstrap.min.css">
-
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
-
-  <!--<link rel="stylesheet" href="css/bootstrap-theme.min.css">-->
-  <script src="node_modules/leaflet/dist/leaflet.js"></script>
-  <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/main.css">
+  <!--<script src="node_modules/leaflet/dist/leaflet.js"></script>-->
+  <!--<link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />-->
 
   <script type="text/javascript" src="js/vendor/handlebars.js"></script>
-  <!--<script src="maps/tl_rd13_24_sldl_7-ms-ms.js"></script>-->
-  <!--<script src='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.js'></script>-->
-  <!--<link href='https://api.tiles.mapbox.com/mapbox.js/v1.6.2/mapbox.css' rel='stylesheet' />-->
+  <!--<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
+  <link rel="stylesheet" href="css/main.css">
 
-  <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
 </head>
 <body>
-
-
 <div class="container">
   <div class="row">
-    <h2>Maryland League of Conservation Voters  <br><small>2014 Endorsement Map</small></h2>
-  </div>
-  <div class="row">
-    <!--<div id="main" class="col-xs-9">-->
-      <!--<div id="map"></div>-->
-    <!--</div>-->
     <div id="sidebar1" class="sidebar col-xs-4"></div>
     <div id="sidebar2" class="sidebar col-xs-4"></div>
     <div id="sidebar3" class="sidebar col-xs-4"></div>
-
   </div>
   <div class="row">
     <div id="content"></div>
@@ -59,13 +44,11 @@
 <script src="js/vendor/bootstrap.min.js"></script>
 
 
-<script src="js/main.js"></script>
+<!--<script src="js/main.js"></script>-->
 
 <script type="text/javascript" src="js/vendor/tabletop.js"></script>
 
 <script type="text/javascript">
-
-
   var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
 
   var dist;
@@ -73,23 +56,18 @@
   var MDHouseDistricts = {};
   console.log('MDHouseDistricts', MDHouseDistricts);
   var app = {};
-  var houseLayer;
-  var latitude = 38.9;
-  var longitude = -77.4;
-  var latLng = new L.LatLng(latitude, longitude);
   var sidebar = $('#sidebar');
-//  var map = L.map('map').setView(latLng, 8);
 
 
   $(document).ready( function() {
+    $("#myModal").modal('show');
     Tabletop.init( { key: public_spreadsheet_url,
       callback: showInfo,
       parseNumbers: true } );
   });
 
   function showInfo(data, tabletop) {
-    var scoreColor;
-    var sourcebox = $("#senate-template-infobox").html();
+    var sourcebox = $("#template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
       MDHouseDistricts[member.district] = member;
@@ -101,7 +79,7 @@
 
   function memberDetailFunction(districtNumber){
     var districtDetail = MDHouseDistricts[districtNumber];
-    var sourcebox = $("#senate-template-infobox").html();
+    var sourcebox = $("#template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     var html = app.infoboxTemplate(districtDetail);
     $('.sidebar').html(html);
@@ -122,10 +100,10 @@
 </script>
 
 
-<script id="senate-template-infobox" type="text/x-handlebars-template">
+<script id="template-infobox" type="text/x-handlebars-template">
   <div class="entry-infobox" style="width:auto; padding-top:9px;">
     <div class="body">
-      <!--<img src="images/MLCV_logo.gif" class="ri" alt=""/>-->
+      <img src="images/MLCV_logo.gif" class="ri" alt=""/>
       <strong>District {{{district}}} Endorsements</strong><br />
       <p class="entry-header">Governor</p>
       <p class="icon icon-check"> {{{governor}}}</p><br />
@@ -162,5 +140,28 @@
     r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
   ga('create','UA-XXXXX-X');ga('send','pageview');
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">One Ballot for You, Two for your Friends!</h4>
+        </div>
+        <div class="modal-body">
+          <p>We suggest setting your printer page format to "landscape" (horizontal page) to </p>
+          <p class="text-warning"><small>If you don't save, your changes will be lost.</small></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+          <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 </html>

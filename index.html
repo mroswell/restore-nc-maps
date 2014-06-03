@@ -116,9 +116,11 @@
         <!--<p id='close1' class='close'>&times;</p><br>-->
         <h5 style="text-align: center">Map Help</h5>
         <ul>
-          <li>Mouse over districts<br />to<strong> view endorsements</strong> and <strong>see streets</strong></li>
-          <li>Zoom, then mouse over to see streets more clearly</li>
-          <li>Click a district to <strong>"freeze" the endorsement panel.</strong> Click the 'x' to dismiss the panel.</li>
+          <li><strong>Mouse over</strong> districts to view endorsements and see streets</li>
+          <li><strong>Zoom, then mouse over</strong> to see streets more clearly</li>
+          <li><strong>Click a district</strong> to freeze the endorsement panel</li>
+          <li><strong>Click the 'x'</strong> to dismiss the endorsement panel and re-enable mouseover function.</li>
+          <li><strong>Double-click a district</strong> to zoom to the district (not useful on mobile)</li>
         </ul>
         <div class="row" style="text-align: center; margin:auto">
           <div class='my-legend'>
@@ -129,6 +131,26 @@
               </ul>
             </div>
         </div>
+        </div>
+        </div>
+        </div>
+  </script>
+
+  <script id="template-endorse-text" type="text/x-handlebars-template">
+    <div class="entry-default-text" style="padding-top:9px;">
+      <div class="body">
+        <!--<p id='close1' class='close'>&times;</p><br>-->
+        <h5 style="text-align: center">Our Endorsement Process</h5>
+
+        <!--<ul>-->
+          <!--<li><strong>Mouse over</strong> districts to view endorsements and see streets</li>-->
+          <!--<li><strong>Zoom, then mouse over</strong> to see streets more clearly</li>-->
+          <!--<li><strong>Click a district</strong> to freeze the endorsement panel</li>-->
+          <!--<li><strong>Click the 'x'</strong> to dismiss the endorsement panel and re-enable mouseover function.</li>-->
+          <!--<li><strong>Double-click a district</strong> to zoom to the district (not useful on mobile)</li>-->
+        <!--</ul>-->
+        "Our goal is to educate voters about the best environmental candidates. This is even more important in open seats where candidates may not have established records. Voters don't have the time to interview and review each candidate's platform, but they can rely upon Maryland LCV to do their homework and let voters know the best choice."  <br /> - Chuck Porcari,  Political Committee Chair of Maryland LCV's Board.     </div>
+    </div>
   </script>
 
   <script id="template-infobox" type="text/x-handlebars-template">
@@ -161,7 +183,7 @@
         <div style=" text-align:center; margin-bottom:1em;">
           <p style="font-size:12px; padding-top:12px;">
             Bring this ballot to the poll. <br/>
-            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print.<br />
+            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print<br />
               <span class="icon icon-print"></span></a>
           </p>
         </div>
@@ -173,16 +195,7 @@
 <div class="clear"></div>
 
 <div class="wide4">
-  <!--<a href="index-2.html">Home</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/about">About</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/issues">Issues</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/take-action">Take Action</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/scorecards">Scorecards</a> <span class="smallvertline">|</span>-->
-  <!--<a href="https://www.thedatabank.com/dpg/288/donate.asp?formid=donate">Donate</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/elections">Elections</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/county-chapters">Chapters</a>-->
-  <!--<a href="http://mdlcv.org/news-media">News &amp; Media</a> <span class="smallvertline">|</span>-->
-  <!--<a href="http://mdlcv.org/calendar">Calendar</a>-->
+
   &nbsp;
 
   <div class="wide5">
@@ -194,25 +207,25 @@
   </div>
 
 
-  <!-- Google Analytics Code -->
-  <script type="text/javascript">
-    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-  </script><script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
-  <script type="text/javascript">
-    var pageTracker = _gat._getTracker("UA-4427283-1");
-    pageTracker._initData();
-    pageTracker._trackPageview();
-  </script>
-  <!--end Google Analytics Code -->
+</div>  <!-- Google Analytics Code -->
+<script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script src="http://www.google-analytics.com/ga.js" type="text/javascript"></script>
+<script type="text/javascript">
+  var pageTracker = _gat._getTracker("UA-4427283-1");
+  pageTracker._initData();
+  pageTracker._trackPageview();
+</script>
+<!--end Google Analytics Code -->
 
-  <!--&lt;!&ndash; Google Analytics: change UA-XXXXX-X to be your site's ID. &ndash;&gt;-->
-  <!--<script>-->
-  <!--(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=-->
-  <!--function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;-->
-  <!--e=o.createElement(i);r=o.getElementsByTagName(i)[0];-->
-  <!--e.src='//www.google-analytics.com/analytics.js';-->
-  <!--r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));-->
-  <!--ga('create','UA-XXXXX-X');ga('send','pageview');-->
-  <!--</script>-->
-</div></body></html>
+<!--&lt;!&ndash; Google Analytics: change UA-XXXXX-X to be your site's ID. &ndash;&gt;-->
+<!--<script>-->
+<!--(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=-->
+<!--function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;-->
+<!--e=o.createElement(i);r=o.getElementsByTagName(i)[0];-->
+<!--e.src='//www.google-analytics.com/analytics.js';-->
+<!--r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));-->
+<!--ga('create','UA-XXXXX-X');ga('send','pageview');-->
+<!--</script>-->
+</body></html>
