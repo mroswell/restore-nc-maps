@@ -158,8 +158,17 @@
     <div class="entry-infobox" style="padding-top:9px;">
       <div class="body">
         <p  id='close' class='close'>&times;</p><br>
+        <strong>District {{{district}}} Endorsements</strong>
+        <div style=" text-align:center; margin-bottom:1em;">
+          <p style="font-size:12px; padding-top:12px;">
+            Bring this ballot to the poll. <br/>
+            Click the map<br />then click here to print</p>
+          <p>
+            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}"><span class="icon-2x icon-print"></span></a>&nbsp;&nbsp;
+            <a target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>&nbsp;&nbsp;<a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a>
 
-        <strong>District {{{district}}} Endorsements</strong><br />
+          </p>
+        </div>
         <p class="entry-header">Governor</p>
         <p class="icon icon-check"> {{{governor}}}</p><br />
         <p class="entry-header">Attorney General</p>
@@ -181,13 +190,6 @@
         {{#if description}}
         <p class="entry-header"> <span class="icon icon-star"> <strong>MDLCV Priority Race</strong></span> <span class="icon icon-star"></span></p>
         {{{description}}}<br>{{/if}}
-        <div style=" text-align:center; margin-bottom:1em;">
-          <p style="font-size:12px; padding-top:12px;">
-            Bring this ballot to the poll. <br/>
-            <a href ="http://mroswell.github.io/mdlcv-endorsement-map/ballot.html?district={{district}}" >Click the map<br />then click here to print<br />
-              <span class="icon icon-print"></span></a>
-          </p>
-        </div>
       </div>
     </div>
   </script>
