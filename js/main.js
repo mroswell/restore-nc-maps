@@ -143,7 +143,7 @@ function highlightFeature(e) {
 
   layer.setStyle({
     weight: 5,
-    color: '#b7907f',
+    color: '#666',
     dashArray: '',
     fillOpacity: 0.4
   });
@@ -183,7 +183,7 @@ function resetHighlight(e) {
       fillColor: remapColor(frozenDistrictDetail.colormethod),
       weight: 5,
       opacity: 0.3,
-      color: '#666',
+      color: '#b7907f',
       dashArray: '0',
       fillOpacity:.4
     })
@@ -197,7 +197,6 @@ function clearInfobox() {
 function mapMemberDetailClick(e) {
   freeze=1;
   var boundary = e.target;
-  frozenDist = _.clone(boundary);
   console.log("FrOZEN", frozenDist);
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
   var districtDetail = MDHouseDistricts[districtNumber];
@@ -211,7 +210,7 @@ function mapMemberDetailClick(e) {
   }
   boundary.setStyle({
     weight: 5,
-    color: '#666',
+    color: '#b7907f',
     dashArray: '',
     fillOpacity: 0.4
   });
