@@ -264,19 +264,7 @@ $mapHelp.click(function() {
   freeze=false;
 });
 
-$mapHelp.hover(function() {
-  var html = app.defaultTemplate({});
-  $('#sidebar').html(html);
-  freeze=false;
-});
-
 $endorseHelp.click(function() {
-  var html = app.endorseTemplate({});
-  $('#sidebar').html(html);
-  freeze=false;
-});
-
-$endorseHelp.hover(function() {
   var html = app.endorseTemplate({});
   $('#sidebar').html(html);
   freeze=false;
