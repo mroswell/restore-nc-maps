@@ -3,6 +3,7 @@ var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts
 var app = {};
 var MDHouseDistricts = {};
 var frozenDist;
+var twoClicksAgo;
 var freeze=0;
 var houseLayer;
 var latitude = 38.82;
@@ -16,28 +17,35 @@ var $endorseHelp = $("#endorsement-process")
 
 
 $(document).ready( function() {
-  Tabletop.init( { key: public_spreadsheet_url,
-    callback: showInfo,
-    parseNumbers: true } );
-});
-
-function showInfo(data, tabletop) {
   var defaultText =$("#template-default-text").html();
   var sourcebox = $("#template-infobox").html();
   var endorseText = $("#template-endorse-text").html();
   app.infoboxTemplate = Handlebars.compile(sourcebox);
   app.defaultTemplate = Handlebars.compile(defaultText);
   app.endorseTemplate = Handlebars.compile(endorseText);
+  Tabletop.init( { key: public_spreadsheet_url,
+    callback: showInfo,
+    parseNumbers: true } );
+});
 
+function showInfo(data, tabletop) {
   $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
-
     MDHouseDistricts[member.district] = member;
   });
 
-  console.log("MDHouseDistricts", MDHouseDistricts);
+//  console.log("MDHouseDistricts", MDHouseDistricts);
   loadGeo();
 //     processJSON(tabletop.sheets("Sheet1").all());
 }
+
+// Remap the color from the spreadsheet to a more desirable color
+var remapColor = function(color) {
+  if (color =="#FFFFBF") {
+    color= '#fff4c1';
+  }
+  return color;
+}
+
 var geoStyle = function(data) {
 //   console.log('data', data);
   console.log('-------------------');
@@ -52,30 +60,21 @@ var geoStyle = function(data) {
   //console.log('-------------------');
 
   var houseDistrict = MDHouseDistricts[sldlst];
-  console.log('houseDistrict', houseDistrict);
+  console.log('geoStyle houseDistrict', houseDistrict);
 
   var color = 'white';
-  var opacity = .50;
 
   if(houseDistrict) {
-    color = houseDistrict.colormethod;
-    if (color =="#FFFFBF") {
-      console.log(color);
-//      color= '#ffe9c3';
-      color= '#fff4c1';
-//      color = '#FFCD76';
-    }
+    color = remapColor(houseDistrict.colormethod);
+
 //    color='#0B8973';
   }
 console.log('housedistrict.....', houseDistrict.district);
-  if (houseDistrict.district==43 ) {
-    opacity = 0.1;
-  }
 
   return {
     fillColor: color,
     weight: 1,
-    opacity: opacity,
+    opacity: 0.3,
     color: '#555555',
     dashArray: '0',
     fillOpacity: 1
@@ -110,10 +109,21 @@ function onEachFeature(feature, layer) {
   });
 }
 
+function checkColor(layer) {
+  if (layer.options) {
+    return layer.options.fillColor;
+  } else if (layer._layers) {
+    for (var polyID in layer._layers) {
+      return layer._layers[polyID].options.fillColor;
+    }
+  }
+}
 
 
 function highlightFeature(e) {
   var layer = e.target;
+  var color = checkColor(layer);
+  if (layer.options) {console.log("---yes---")} else {console.log("---NO---")}
   var districtNumber = layer.feature.properties.SLDLST;
   districtNumber = districtNumber.replace(/^0+/, '');
   var memberDetail = MDHouseDistricts[districtNumber];
@@ -131,16 +141,16 @@ function highlightFeature(e) {
 
   $('.info').html(html);
 
-
+  layer.setStyle({
+    weight: 5,
+    color: '#b7907f',
+    dashArray: '',
+    fillOpacity: 0.4
+  });
   if (!freeze) {
     html = app.infoboxTemplate(memberDetail);
     $('#sidebar').html(html);
-    layer.setStyle({
-      weight: 5,
-      color: '#666',
-      dashArray: '',
-      fillOpacity: 0.5
-    });
+
 
     if (!L.Browser.ie && !L.Browser.opera) {
       layer.bringToFront();
@@ -152,22 +162,32 @@ function highlightFeature(e) {
 
 
 function resetHighlight(e) {
+  if (typeof frozenDist == 'object' && freeze) {
+    twoClicksAgo = _.clone(frozenDist);
+  }
+  info.update();
   var layer = e.target;
+  console.log("resetHighlight:e :::--:--:--:",e);
+//  houseLayer.resetStyle(layer);
   houseLayer.resetStyle(layer);
   info.update();
   if (!freeze) {
     clearInfobox();
   }
-// else {
-//    if (layer == frozenDist) {
-//    layer.setStyle({
-//      weight: 5,
-//      color: 'orange',
-//      dashArray: '',
-//      fillOpacity: 0.4
-//    });
-//  }
-//  }
+  console.log("resetHighlight: frozenDist",frozenDist);
+
+  if (typeof frozenDist == 'object' && freeze) {
+    var frozenDistrictNumber = frozenDist.target.feature.properties.SLDLST.replace(/^0+/, '');
+    var frozenDistrictDetail = MDHouseDistricts[frozenDistrictNumber];
+    frozenDist.target.setStyle({
+      fillColor: remapColor(frozenDistrictDetail.colormethod),
+      weight: 5,
+      opacity: 0.3,
+      color: '#666',
+      dashArray: '0',
+      fillOpacity:.4
+    })
+}
 }
 
 function clearInfobox() {
@@ -180,17 +200,24 @@ function mapMemberDetailClick(e) {
   frozenDist = _.clone(boundary);
   console.log("FrOZEN", frozenDist);
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
-  console.log("mapMemberDetailClick: ", districtNumber);
+  var districtDetail = MDHouseDistricts[districtNumber];
   var member = memberDetailFunction(districtNumber);
   console.log("::::::",e);
   console.log(boundary.getBounds().toBBoxString());
 
+//  houseLayer.resetStyle(frozenDist.target);
+  if (twoClicksAgo) {
+   houseLayer.resetStyle(twoClicksAgo.target);
+  }
   boundary.setStyle({
     weight: 5,
     color: '#666',
     dashArray: '',
     fillOpacity: 0.4
   });
+  frozenDist = _.clone(e);
+  console.log("FrOZEN", frozenDist);
+  console.log("BOUNDARY", boundary);
 }
 
 function memberDetailFunction(districtNumber){
