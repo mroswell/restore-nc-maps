@@ -135,7 +135,6 @@ function highlightFeature(e) {
   if (!freeze) {
     html = app.infoboxTemplate(memberDetail);
     $('#sidebar').html(html);
-
     layer.setStyle({
       weight: 5,
       color: '#666',
@@ -200,7 +199,6 @@ function memberDetailFunction(districtNumber){
   var html = app.infoboxTemplate(districtDetail);
   // 2. Insert the rendered template into #sidebar
   $('#sidebar').html(html);
-
 }
 
 function mapDblClick(e) {
