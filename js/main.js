@@ -15,7 +15,6 @@ var map = L.map('map')
 var $mapHelp = $("#map-help");
 var $endorseHelp = $("#endorsement-process")
 
-
 $(document).ready( function() {
   var defaultText =$("#template-default-text").html();
   var sourcebox = $("#template-infobox").html();
@@ -47,11 +46,8 @@ var remapColor = function(color) {
 var geoStyle = function(data) {
   var sldlst = data.properties.SLDLST;
   sldlst = sldlst.replace(/^0+/, '');
-
   var houseDistrict = MDHouseDistricts[sldlst];
-
   var color = 'white';
-
   if(houseDistrict) {
     color = remapColor(houseDistrict.colormethod);
 //    color='#0B8973';
@@ -95,19 +91,8 @@ function onEachFeature(feature, layer) {
   });
 }
 
-function checkColor(layer) {
-  if (layer.options) {
-    return layer.options.fillColor;
-  } else if (layer._layers) {
-    for (var polyID in layer._layers) {
-      return layer._layers[polyID].options.fillColor;
-    }
-  }
-}
-
 function highlightFeature(e) {
   var layer = e.target;
-  var color = checkColor(layer);
   var districtNumber = layer.feature.properties.SLDLST;
   districtNumber = districtNumber.replace(/^0+/, '');
   var memberDetail = MDHouseDistricts[districtNumber];
@@ -197,7 +182,6 @@ function mapDblClick(e) {
   var layer = e.target;
   var districtNumber = layer.feature.properties.SLDLST;
   districtNumber = districtNumber.replace(/^0+/, '');
-
   var bbox = layer.getBounds();
   map.fitBounds(bbox);
   layer.setStyle({
@@ -221,7 +205,6 @@ info.update = function (props) {
 };
 
 info.setPosition('bottomleft').addTo(map);
-
 
 $mapHelp.click(function() {
   var html = app.defaultTemplate({});
