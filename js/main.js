@@ -33,9 +33,7 @@ function showInfo(data, tabletop) {
     MDHouseDistricts[member.district] = member;
   });
 
-//  console.log("MDHouseDistricts", MDHouseDistricts);
   loadGeo();
-//     processJSON(tabletop.sheets("Sheet1").all());
 }
 
 // Remap the color from the spreadsheet to a more desirable color
@@ -47,29 +45,17 @@ var remapColor = function(color) {
 }
 
 var geoStyle = function(data) {
-//   console.log('data', data);
-  console.log('-------------------');
-//   console.log('MDHouseDistricts',MDHouseDistricts);
   var sldlst = data.properties.SLDLST;
   sldlst = sldlst.replace(/^0+/, '');
-//   var convertedSLDLST = Number(sldlst);
-//   if(convertedSLDLST){
-//    sldlst = convertedSLDLST;
-//   }
-  //console.log(sldlst);
-  //console.log('-------------------');
 
   var houseDistrict = MDHouseDistricts[sldlst];
-  console.log('geoStyle houseDistrict', houseDistrict);
 
   var color = 'white';
 
   if(houseDistrict) {
     color = remapColor(houseDistrict.colormethod);
-
 //    color='#0B8973';
   }
-console.log('housedistrict.....', houseDistrict.district);
 
   return {
     fillColor: color,
@@ -119,22 +105,16 @@ function checkColor(layer) {
   }
 }
 
-
 function highlightFeature(e) {
   var layer = e.target;
   var color = checkColor(layer);
-  if (layer.options) {console.log("---yes---")} else {console.log("---NO---")}
   var districtNumber = layer.feature.properties.SLDLST;
   districtNumber = districtNumber.replace(/^0+/, '');
   var memberDetail = MDHouseDistricts[districtNumber];
   if(!memberDetail){
-    console.log(districtNumber);
     return;
   }
   var html;
-
-//  console.log("highlightFeature: ", layer);
-
   html = "<div class='highlightFeatureInfo'>";
   html += "<strong> District " + memberDetail.district + "</strong>";
   html += "</div>";
@@ -150,8 +130,6 @@ function highlightFeature(e) {
   if (!freeze) {
     html = app.infoboxTemplate(memberDetail);
     $('#sidebar').html(html);
-
-
     if (!L.Browser.ie && !L.Browser.opera) {
       layer.bringToFront();
     }
@@ -159,23 +137,18 @@ function highlightFeature(e) {
   }
 }
 
-
-
 function resetHighlight(e) {
   if (typeof frozenDist == 'object' && freeze) {
     twoClicksAgo = _.clone(frozenDist);
   }
   info.update();
   var layer = e.target;
-  console.log("resetHighlight:e :::--:--:--:",e);
 //  houseLayer.resetStyle(layer);
   houseLayer.resetStyle(layer);
   info.update();
   if (!freeze) {
     clearInfobox();
   }
-  console.log("resetHighlight: frozenDist",frozenDist);
-
   if (typeof frozenDist == 'object' && freeze) {
     var frozenDistrictNumber = frozenDist.target.feature.properties.SLDLST.replace(/^0+/, '');
     var frozenDistrictDetail = MDHouseDistricts[frozenDistrictNumber];
@@ -187,7 +160,7 @@ function resetHighlight(e) {
       dashArray: '0',
       fillOpacity:.4
     })
-}
+  }
 }
 
 function clearInfobox() {
@@ -197,14 +170,9 @@ function clearInfobox() {
 function mapMemberDetailClick(e) {
   freeze=1;
   var boundary = e.target;
-  console.log("FrOZEN", frozenDist);
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
   var districtDetail = MDHouseDistricts[districtNumber];
   var member = memberDetailFunction(districtNumber);
-  console.log("::::::",e);
-  console.log(boundary.getBounds().toBBoxString());
-
-//  houseLayer.resetStyle(frozenDist.target);
   if (twoClicksAgo) {
    houseLayer.resetStyle(twoClicksAgo.target);
   }
@@ -215,8 +183,6 @@ function mapMemberDetailClick(e) {
     fillOpacity: 0.4
   });
   frozenDist = _.clone(e);
-  console.log("FrOZEN", frozenDist);
-  console.log("BOUNDARY", boundary);
 }
 
 function memberDetailFunction(districtNumber){
@@ -240,7 +206,6 @@ function mapDblClick(e) {
     dashArray: '',
     fillOpacity: 0.3
   });
-//  console.log("DBL", bbox.toBBoxString())
   mapMemberDetailClick(e);
 }
 
