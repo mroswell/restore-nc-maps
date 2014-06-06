@@ -160,3 +160,6 @@ p.close {margin-top: -4px;margin-right: -8px; }
     font-weight: bold;
 }
 
+.modal-title, .modal-body {text-align: center;}
+
+.modal-footer {margin-top:0;}

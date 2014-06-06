@@ -449,9 +449,9 @@ table.contentpaneopen td.contentheading { font: 1.5em Georgia,arial,verdana,helv
 
 table.contentpaneopen table { font-size: 1em; font-weight: normal; }
 
-.contentpaneopen { font-size: 0.9em; font-weight: normal; padding-top 12px;}
+.contentpaneopen { font-size: 0.9em; font-weight: normal; padding-top: 12px;}
 
-table.blog table.contentpaneopen td p { font-size: 1.1em; font-weight: normal; padding-top 12px; }
+table.blog table.contentpaneopen td p { font-size: 1.1em; font-weight: normal; padding-top: 12px; }
 
 .small, .button {font: 0.7em arial,verdana,helvetica,sans-serif; color: #0B8973; margin: 4px 0 2px 0;}
 
@@ -493,9 +493,9 @@ h4 { font: bold 1em arial,verdana,helvetica,sans-serif; padding: 10px 0 5px 0; m
 
 ul { padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
 
-li { padding: 0 0 1em 0; margin 0;}.contentpaneopen ul { font-size: 1em; padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
+li { padding: 0 0 1em 0; margin: 0;}.contentpaneopen ul { font-size: 1em; padding: 0 2.5em 0 2.5em;  margin: 0; list-style-image: url(/web/20140521031848/http://mdlcv.org/images/site/blackarrow.gif); list-style-type: disc;}
 
-.contentpaneopen li { font-size: 1.1em; padding: 0 0 1em 0; margin 0;}
+.contentpaneopen li { font-size: 1.1em; padding: 0 0 1em 0; margin: 0;}
 
 a:link {
     text-decoration: none;
@@ -605,7 +605,7 @@ li.pagenav {
 
 .moduletable ul li {
     margin-left: -1em;
-    padding-left 0;
+    padding-left: 0;
 }
 
 #donate {

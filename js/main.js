@@ -123,16 +123,14 @@ function highlightFeature(e) {
 }
 
 function resetHighlight(e) {
-  if (typeof frozenDist == 'object' && freeze) {
-    twoClicksAgo = _.clone(frozenDist);
-  }
+
   info.update();
   var layer = e.target;
 //  houseLayer.resetStyle(layer);
   houseLayer.resetStyle(layer);
   info.update();
   if (!freeze) {
-    clearInfobox();
+    clearInfobox(e);
   }
   if (typeof frozenDist == 'object' && freeze) {
     var frozenDistrictNumber = frozenDist.target.feature.properties.SLDLST.replace(/^0+/, '');
@@ -146,13 +144,34 @@ function resetHighlight(e) {
       fillOpacity:.4
     })
   }
+
+  //weight, opacity, color,fillOpacity
 }
 
 function clearInfobox() {
   sidebar.html(' ');
+  styleDistrict(frozenDist,1,0.3,'#666',1);
+}
+
+function styleDistrict(whichDist, weight, opacity, color, fillOpacity) {
+  if (typeof frozenDist == 'object' && freeze) {
+    var frozenDistrictNumber = frozenDist.target.feature.properties.SLDLST.replace(/^0+/, '');
+    var frozenDistrictDetail = MDHouseDistricts[frozenDistrictNumber];
+    frozenDist.target.setStyle({
+      fillColor: remapColor(frozenDistrictDetail.colormethod),
+      weight: weight,
+      opacity: opacity,
+      color: color,
+      dashArray: '0',
+      fillOpacity:fillOpacity
+    })
+  }
 }
 
 function mapMemberDetailClick(e) {
+  if (typeof frozenDist == 'object' && freeze) {
+    twoClicksAgo = _.clone(frozenDist);
+  }
   freeze=1;
   var boundary = e.target;
   var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
