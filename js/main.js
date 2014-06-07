@@ -13,7 +13,7 @@ var map = L.map('map')
   .setView(latLng, 8);
 var $sidebar = $('#sidebar');
 var $mapHelp = $("#map-help");
-var $endorseHelp = $("#endorsement-process")
+var $endorseHelp = $("#endorsement-process");
 
 $(document).ready( function() {
   var defaultText =$("#template-default-text").html();
@@ -58,7 +58,7 @@ var geoStyle = function(data) {
     opacity: 0.3,
     color: '#555555',
     dashArray: '0',
-    fillOpacity:.9
+    fillOpacity:1
   }
 };
 
@@ -107,7 +107,7 @@ function highlightFeature(e) {
 
   layer.setStyle({
     weight: 5,
-    color: '#b7907f',
+    color: '#666',
     dashArray: '',
     fillOpacity: 0.2
   });
@@ -132,7 +132,7 @@ function resetHighlight(e) {
     clearInfobox(e);
   }
 
-  styleDistrict(frozenDist,5,0.3,'#666',0.25);
+  styleDistrict(frozenDist,5,0.3,'#b7907f',0.25);
 }
 
 function clearInfobox() {
