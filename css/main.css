@@ -161,5 +161,6 @@ p.close {margin-top: -4px;margin-right: -8px; }
 }
 
 .modal-title, .modal-body {text-align: center;}
-
 .modal-footer {margin-top:0;}
+
+.entry-default-text p {line-height: 1.2em;}

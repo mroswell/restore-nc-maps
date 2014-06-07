@@ -9,9 +9,9 @@ var houseLayer;
 var latitude = 38.82;
 var longitude = -77.28;
 var latLng = new L.LatLng(latitude, longitude);
-var sidebar = $('#sidebar');
 var map = L.map('map')
   .setView(latLng, 8);
+var $sidebar = $('#sidebar');
 var $mapHelp = $("#map-help");
 var $endorseHelp = $("#endorsement-process")
 
@@ -31,7 +31,6 @@ function showInfo(data, tabletop) {
   $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
     MDHouseDistricts[member.district] = member;
   });
-
   loadGeo();
 }
 
@@ -59,7 +58,7 @@ var geoStyle = function(data) {
     opacity: 0.3,
     color: '#555555',
     dashArray: '0',
-    fillOpacity: 1
+    fillOpacity:.9
   }
 };
 
@@ -108,9 +107,9 @@ function highlightFeature(e) {
 
   layer.setStyle({
     weight: 5,
-    color: '#666',
+    color: '#b7907f',
     dashArray: '',
-    fillOpacity: 0.4
+    fillOpacity: 0.2
   });
   if (!freeze) {
     html = app.infoboxTemplate(memberDetail);
@@ -132,24 +131,12 @@ function resetHighlight(e) {
   if (!freeze) {
     clearInfobox(e);
   }
-  if (typeof frozenDist == 'object' && freeze) {
-    var frozenDistrictNumber = frozenDist.target.feature.properties.SLDLST.replace(/^0+/, '');
-    var frozenDistrictDetail = MDHouseDistricts[frozenDistrictNumber];
-    frozenDist.target.setStyle({
-      fillColor: remapColor(frozenDistrictDetail.colormethod),
-      weight: 5,
-      opacity: 0.3,
-      color: '#b7907f',
-      dashArray: '0',
-      fillOpacity:.4
-    })
-  }
 
-  //weight, opacity, color,fillOpacity
+  styleDistrict(frozenDist,5,0.3,'#666',0.25);
 }
 
 function clearInfobox() {
-  sidebar.html(' ');
+  $sidebar.html(' ');
   styleDistrict(frozenDist,1,0.3,'#666',1);
 }
 
@@ -162,7 +149,7 @@ function styleDistrict(whichDist, weight, opacity, color, fillOpacity) {
       weight: weight,
       opacity: opacity,
       color: color,
-      dashArray: '0',
+//      dashArray: '0',
       fillOpacity:fillOpacity
     })
   }
@@ -183,8 +170,8 @@ function mapMemberDetailClick(e) {
   boundary.setStyle({
     weight: 5,
     color: '#b7907f',
-    dashArray: '',
-    fillOpacity: 0.4
+//    dashArray: '',
+    fillOpacity: 0.1
   });
   frozenDist = _.clone(e);
 }
@@ -206,8 +193,8 @@ function mapDblClick(e) {
   layer.setStyle({
     weight: 5,
     color: '#666',
-    dashArray: '',
-    fillOpacity: 0.3
+//    dashArray: '',
+    fillOpacity: 0.2
   });
   mapMemberDetailClick(e);
 }
