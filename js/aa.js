@@ -42,7 +42,8 @@ function loadGeo(district) {
   //'examples.map-9ijuk24y'
 
   var myStyle = {
-    fillColor: '#ddd7b8',
+    fillColor: '#FFEBCD',
+    //'#ddd7b8',
     weight: 1,
     opacity: 0.3,
     color: '#555555',
@@ -54,7 +55,10 @@ function loadGeo(district) {
 // L.geoJson(aa_council_districts, {
 //    style: myStyle
 //  }).addTo(map);
-  L.geoJson(aa4, {style:myStyle}).addTo(map);
+  L.geoJson(aa, {
+    onEachFeature:onEachFeature,
+    style: myStyle
+  }).addTo(map);
 
 //  aaLayer.addTo(map);
 
@@ -68,45 +72,45 @@ function loadGeo(district) {
 
 //}
 
-//function onEachFeature(feature, layer) {
-//  layer.on({
-//    mouseover: highlightFeature
-////    mouseout: resetHighlight,
-////    click: mapMemberDetailClick,
-////    dblclick: mapDblClick
-//  });
-//}
+function onEachFeature(feature, layer) {
+  layer.on({
+    mouseover: highlightFeature
+//    mouseout: resetHighlight,
+//    click: mapMemberDetailClick,
+//    dblclick: mapDblClick
+  });
+}
+
+function highlightFeature(e) {
+  var layer = e.target;
+//  var districtNumber = layer.feature.properties.CNCL;
+//  districtNumber = districtNumber.replace(/^0+/, '');
+//  var memberDetail = MDHouseDistricts[districtNumber];
+//  if(!memberDetail){
+//    return;
+//  }
+//  var html;
+//  html = "<div class='highlightFeatureInfo'>";
+//  html += "<strong> District " + memberDetail.district + "</strong>";
+//  html += "</div>";
 //
-//function highlightFeature(e) {
-//  var layer = e.target;
-////  var districtNumber = layer.feature.properties.SLDLST;
-////  districtNumber = districtNumber.replace(/^0+/, '');
-////  var memberDetail = MDHouseDistricts[districtNumber];
-////  if(!memberDetail){
-////    return;
-////  }
-////  var html;
-////  html = "<div class='highlightFeatureInfo'>";
-////  html += "<strong> District " + memberDetail.district + "</strong>";
-////  html += "</div>";
-////
-////  $('.info').html(html);
-//
-//  layer.setStyle({
-//    weight: 5,
-//    color: '#666',
-//    dashArray: '',
-//    fillOpacity: 0.2
-//  });
-////  if (!freeze) {
-////    html = app.infoboxTemplate(memberDetail);
-////    $('#sidebar').html(html);
-////    if (!L.Browser.ie && !L.Browser.opera) {
-////      layer.bringToFront();
-////    }
-////    info.update(layer.feature.properties);
-////  }
-//}
+//  $('.info').html(html);
+
+  layer.setStyle({
+    weight: 5,
+    color: '#666',
+    dashArray: '',
+    fillOpacity: 0.2
+  });
+//  if (!freeze) {
+//    html = app.infoboxTemplate(memberDetail);
+//    $('#sidebar').html(html);
+//    if (!L.Browser.ie && !L.Browser.opera) {
+//      layer.bringToFront();
+//    }
+//    info.update(layer.feature.properties);
+//  }
+}
 //
 //function resetHighlight(e) {
 //  info.update();
