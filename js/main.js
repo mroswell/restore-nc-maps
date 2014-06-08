@@ -1,4 +1,4 @@
-var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdEJZSEZsOWhoRVlOVzBWQ2dFVk1ab0E&single=true&gid=5&output=html';
+var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdEJZSEZsOWhoRVlOVzBWQ2dFVk1ab0E&single=true&gid=11&output=html';
 
 var app = {};
 var MDHouseDistricts = {};
@@ -28,7 +28,7 @@ $(document).ready( function() {
 });
 
 function showInfo(data, tabletop) {
-  $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
+  $.each( tabletop.sheets("MDLCV 2014 Endorsements").all(), function(i, member) {
     MDHouseDistricts[member.district] = member;
   });
   loadGeo();
