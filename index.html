@@ -145,9 +145,9 @@
         <div style=" text-align:center; margin-bottom:1em;">
           <p style="font-size:12px; padding-top:12px;">
             Bring this ballot to the poll. <br/>
-            Click the map<br />then <a href ="http://ballot.mdlcv.org/ballot.html?district={{#if districtvalue}}{{districtvalue}}{{else}}{{district}}{{/if}}">click here to print</a></p>
+            Click the map<br />then <a href ="http://ballot.mdlcv.org/ballot.html?district={{#if districtslug}}{{districtslug}}{{else}}{{district}}{{/if}}">click here to print</a></p>
           <p>
-            <a href ="http://ballot.mdlcv.org/ballot.html?district={{#if districtvalue}}{{districtvalue}}{{else}}{{district}}{{/if}}"><span class="icon-2x icon-print"></span></a>
+            <a href ="http://ballot.mdlcv.org/ballot.html?district={{#if districtslug}}{{districtslug}}{{else}}{{district}}{{/if}}"><span class="icon-2x icon-print"></span></a>
           </p>
         </div>
         <p class="entry-header">Governor</p>
@@ -174,9 +174,8 @@
         <p class="icon icon-check"> {{aacouncil}}</p>{{/if}}
         {{#if description}}
         <p class="entry-header"> <span class="icon icon-star"> <strong>MDLCV Priority Race</strong></span> <span class="icon icon-star"></span></p>
-        {{{description}}}<br>{{/if}}
-        {{#if anne}}<p>We endorse George Johnson for County Executive because of his career experience in the protection of natural resources and his environmental positions in this and past elections. For the last seven years George has been superintendent of the Natural Resources Police managing more than 300 employees with a budget of $40 million. Prior that that he served as Sheriff of Anne Arundel County. He currently supports the Stormwater Restoration fund as a necessary to tackle the problems of waterway pollution.  In his 2006 campaign for County Executive he also supported a stormwater fee and some attribute his defeat in that election to that support.</p><p>
-The two Republican candidates have both been vocal in their opposition to the Watershed Restoration Fund or what they wrongly refer to as the "rain tax". Neither of these candidates has expressed strong support for environmental issues.</p>
+        {{{description}}}<br />{{/if}}
+        {{#if anne}}<br /><p>We endorse <strong>George Johnson</strong> for County Executive because of his career experience in the protection of natural resources and his environmental positions in this and past elections. For the last seven years George has been superintendent of the Natural Resources Police managing more than 300 employees with a budget of $40 million. Prior that that he served as Sheriff of Anne Arundel County. He currently supports the Stormwater Restoration fund as a necessary to tackle the problems of waterway pollution.  In his 2006 campaign for County Executive he also supported a stormwater fee and some attribute his defeat in that election to that support.</p><p>The two Republican candidates have both been vocal in their opposition to the Watershed Restoration Fund or what they wrongly refer to as the "rain tax." Neither of these candidates has expressed strong support for environmental issues.</p>
         {{/if}}
       </div>
     </div>
