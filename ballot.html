@@ -48,12 +48,12 @@
 <script type="text/javascript" src="js/vendor/tabletop.js"></script>
 
 <script type="text/javascript">
-  var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
+//  var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdDQ4RzMzQ0pLTmJ6OUh6UVBNbkFPc3c&output=html';
+  var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdEJZSEZsOWhoRVlOVzBWQ2dFVk1ab0E&single=true&gid=11&output=html';
 
   var dist;
   var freeze=0;
   var MDHouseDistricts = {};
-  console.log('MDHouseDistricts', MDHouseDistricts);
   var app = {};
   var sidebar = $('#sidebar');
 
@@ -68,11 +68,14 @@
   function showInfo(data, tabletop) {
     var sourcebox = $("#template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
-    $.each( tabletop.sheets("MD 2014 Endorsements").all(), function(i, member) {
+    $.each( tabletop.sheets("MDLCV 2014 Endorsements").all(), function(i, member) {
+      console.log('showInfo:member: ', member, member.district);
       MDHouseDistricts[member.district] = member;
     });
     console.log("MDHouseDistricts", MDHouseDistricts);
     var districtnumber = getQueryVariable('district');
+//    var districtnumber = getParameterByName('district');
+    console.log("districtnumber");
     memberDetailFunction(districtnumber);
   }
 
@@ -94,6 +97,13 @@
       if(pair[0] == variable){return pair[1];}
     }
     return(false);
+  }
+
+  function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
 </script>
