@@ -57,23 +57,38 @@
   var app = {};
   var sidebar = $('#sidebar');
 
+  // Check to see if we have the right params
+  if( getQueryVariable('district')===false ){
+    // Required param not in place.
+    // Lets redirect
+    redirectUser();
+  }
 
   $(document).ready( function() {
+
     $("#myModal").modal('show');
     Tabletop.init( { key: public_spreadsheet_url,
       callback: showInfo,
       parseNumbers: true } );
   });
 
+function redirectUser() {
+  window.location = 'index.html';
+}
+
   function showInfo(data, tabletop) {
     var sourcebox = $("#template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     $.each( tabletop.sheets("MDLCV 2014 Endorsements").all(), function(i, member) {
       console.log('showInfo:member: ', member, member.district);
-      MDHouseDistricts[member.districtvalue || member.district] = member;
+      // Choose what column to use for a key.
+      // Some districts are numbers: cast to string then uppercase.
+      var districtKey = (member.districtvalue || member.district).toString();
+      MDHouseDistricts[districtKey.toUpperCase()] = member;
     });
     console.log("MDHouseDistricts", MDHouseDistricts);
-    var districtnumber = getQueryVariable('district');
+    var districtnumber = getQueryVariable('district').toUpperCase();
+    console.log("Transformed value: ",districtnumber);
 //    var districtnumber = getParameterByName('district');
     console.log("districtnumber:",districtnumber);
     memberDetailFunction(districtnumber);
@@ -81,6 +96,10 @@
 
   function memberDetailFunction(districtNumber){
     var districtDetail = MDHouseDistricts[decodeURIComponent(districtNumber)];
+    // Let's make sure we found the district we were looking for
+    if( districtDetail === undefined ) {
+      redirectUser();
+    }
     var sourcebox = $("#template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     var html = app.infoboxTemplate(districtDetail);
@@ -94,16 +113,10 @@
     var vars = query.split("&");
     for (var i=0;i<vars.length;i++) {
       var pair = vars[i].split("=");
+      console.log("query param: ",pair);
       if(pair[0] == variable){return pair[1];}
     }
     return(false);
-  }
-
-  function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   }
 
 </script>
@@ -132,9 +145,18 @@
       {{#if delegate2}}<p class="icon icon-check"> {{{delegate2}}}</p><br />{{/if}}
       {{#if delegate3}}<p class="icon icon-check"> {{{delegate3}}}</p><br />{{/if}}
       {{#if delegate4}}<p class="icon icon-check"> {{{delegate4}}}<br />{{/if}}</p>
+      {{#if anne}}<p class="entry-header">County Executive</p>
+      <p class="icon icon-check"> George Johnson</p>
+      {{/if}}
+      {{#if aacouncil}}
+      <p class="entry-header">County Council</p>
+      <p class="icon icon-check"> {{aacouncil}}</p>{{/if}}
       {{#if description}}
       <p class="entry-header"> <span class="icon icon-star"> MDLCV Priority Race</span></p>
       {{{description}}}<br>{{/if}}
+      {{#if anne}}<p>We endorse George Johnson for County Executive because of his career experience in the protection of natural resources and his environmental positions in this and past elections. For the last seven years George has been superintendent of the Natural Resources Police managing more than 300 employees with a budget of $40 million. Prior that that he served as Sheriff of Anne Arundel County. He currently supports the Stormwater Restoration fund as a necessary to tackle the problems of waterway pollution.  In his 2006 campaign for County Executive he also supported a stormwater fee and some attribute his defeat in that election to that support.</p><p>
+      The two Republican candidates have both been vocal in their opposition to the Watershed Restoration Fund or what they wrongly refer to as the "rain tax". Neither of these candidates has expressed strong support for environmental issues.</p>
+      {{/if}}
       <p style="text-align:center; margin-top:10px;">www.mdlcv.org</p>
 
     </div>
