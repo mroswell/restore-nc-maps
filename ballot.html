@@ -70,17 +70,17 @@
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     $.each( tabletop.sheets("MDLCV 2014 Endorsements").all(), function(i, member) {
       console.log('showInfo:member: ', member, member.district);
-      MDHouseDistricts[member.district] = member;
+      MDHouseDistricts[member.districtvalue || member.district] = member;
     });
     console.log("MDHouseDistricts", MDHouseDistricts);
     var districtnumber = getQueryVariable('district');
 //    var districtnumber = getParameterByName('district');
-    console.log("districtnumber");
+    console.log("districtnumber:",districtnumber);
     memberDetailFunction(districtnumber);
   }
 
   function memberDetailFunction(districtNumber){
-    var districtDetail = MDHouseDistricts[districtNumber];
+    var districtDetail = MDHouseDistricts[decodeURIComponent(districtNumber)];
     var sourcebox = $("#template-infobox").html();
     app.infoboxTemplate = Handlebars.compile(sourcebox);
     var html = app.infoboxTemplate(districtDetail);
