@@ -9,14 +9,14 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="content-language" content="en">
-  <title>Maryland League of Conservation Voters | Endorsement Map</title>
+  <title>RestoreNC Senate Map</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta property="og:image" content="http://ballot.mdlcv.org/images/share.png">
   <meta property="og:description" content="Maryland League of Conservation Voters (LCV) is a non-partisan political voice for the environment. Our endorsement process is based on proven leadership on the environment for incumbents, and a thorough evaluation of all candidates' background, viability, and commitment to the environment.">
   <script src="node_modules/leaflet/dist/leaflet.js"></script>
   <script type="text/javascript" src="js/vendor/handlebars.js"></script>
-  <script src="maps/tl_rd13_24_sldl_7-ms-ms.js"></script>
+  <script src="maps/nc_sldu13_orig.js"></script>
   <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
   <meta name="robots" content="index, follow">
   <meta name="keywords" content="">
@@ -137,50 +137,24 @@
     </div>
   </script>
 
-  <script id="template-infobox" type="text/x-handlebars-template">
-    <div class="entry-infobox" style="padding-top:9px;">
-      <div class="body">
-        <p  id='close' class='close'>&times;</p><br>
-        <strong>District {{{district}}} Endorsements</strong>
-        <div style=" text-align:center; margin-bottom:1em;">
-          <p style="font-size:12px; padding-top:12px;">
-            Bring this ballot to the poll. <br/>
-            Click the map<br />then <a href ="http://ballot.mdlcv.org/ballot.html?district={{#if districtslug}}{{districtslug}}{{else}}{{district}}{{/if}}">click here to print</a></p>
-          <p>
-            <a href ="http://ballot.mdlcv.org/ballot.html?district={{#if districtslug}}{{districtslug}}{{else}}{{district}}{{/if}}"><span class="icon-2x icon-print"></span></a>
-          </p>
-        </div>
-        <p class="entry-header">Governor</p>
-        <p class="icon icon-check"> Anthony Brown</p><br />
-        <p class="entry-header">Attorney General</p>
-        <p class="icon icon-check"> Brian Frosh</p><br />
-        <p class="entry-header">Comptroller</p>
-        <p class="icon icon-check"> Peter Franchot</p><br />
-        {{#if senator}}
-        <p class="entry-header">Senate</p>
-        <p class="icon icon-check"> {{{senator}}}</p><br />{{/if}}
-        {{#if delegate}}
-        <p class="entry-header">House</p>
-        <p class="icon icon-check"> {{{delegate}}}</p>
-        <br>{{/if}}
-        {{#if delegate2}}<p class="icon icon-check"> {{{delegate2}}}</p><br />{{/if}}
-        {{#if delegate3}}<p class="icon icon-check"> {{{delegate3}}}</p><br />{{/if}}
-        {{#if delegate4}}<p class="icon icon-check"> {{{delegate4}}}<br />{{/if}}</p>
-        {{#if anne}}<p class="entry-header">County Executive</p>
-        <p class="icon icon-check"> George Johnson</p>
-        {{/if}}
-        {{#if aacouncil}}
-        <p class="entry-header">County Council</p>
-        <p class="icon icon-check"> {{aacouncil}}</p>{{/if}}
-        {{#if anne}}<p class="entry-header"> <span class="icon icon-star"> <strong>MDLCV Priority Race</strong></span> <span class="icon icon-star"></span></p><p class="font13">We endorse <strong>George Johnson</strong> for County Executive because of his career experience in the protection of natural resources and his environmental positions in this and past elections. For the last seven years George has been superintendent of the Natural Resources Police managing more than 300 employees with a budget of $40 million. Prior that that he served as Sheriff of Anne Arundel County. He currently supports the Stormwater Restoration Fund as a necessary to tackle the problems of waterway pollution.  In his 2006 campaign for County Executive he also supported a stormwater fee and some attribute his defeat in that election to that support.</p><p class="font13">The two Republican candidates have both been vocal in their opposition to the Watershed Restoration Fund or what they wrongly refer to as the "rain tax." Neither of these candidates has expressed strong support for environmental issues.</p>
-        {{/if}}
-        {{#if description}}
-        <p class="entry-header"> <span class="icon icon-star"> <strong>MDLCV Priority Race</strong></span> <span class="icon icon-star"></span></p>
-        <span class="font13">{{{description}}}</span><br />{{/if}}
+    <script id="senate-template-infobox" type="text/x-handlebars-template">
+        <div class="entry" style="padding-top:12px;">
+            <div class="body">
+                <button type='button' id='close' class='close'>x</button><br>
 
-      </div>
-    </div>
-  </script>
+                <strong>                {{{fullname}}} ({{{party}}})</strong><br>
+                District {{{district}}}<br>
+                {{#if phone}}{{{phone}}}<br>{{/if}}
+                Counties: <em>{{{countiesrepresented}}}</em><br>
+                Lifetime Score: <strong></strong><br>
+                2013 Score: <strong></strong><br>
+                {{{notes}}}<br>
+                {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
+            </div>
+        </div>
+    </script>
+
+
   <!-- /container -->
 </div>
 <div class="clear"></div>
