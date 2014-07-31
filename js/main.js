@@ -1,35 +1,34 @@
-var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdEJZSEZsOWhoRVlOVzBWQ2dFVk1ab0E&single=true&gid=11&output=html';
-
+var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdEZfekJaQ09fOG41bUNzUU9GN29aMVE&output=html';
 var app = {};
-var MDHouseDistricts = {};
+var NCDistricts = {};
 var frozenDist;
 var twoClicksAgo;
 var freeze=0;
-var houseLayer;
-var latitude = 38.82;
-var longitude = -77.28;
+var Layer;
+var latitude = 35.1; //38.82;
+var longitude = -79.9; // -77.28;
 var latLng = new L.LatLng(latitude, longitude);
 var map = L.map('map')
-  .setView(latLng, 8);
+  .setView(latLng, 7);
 var $sidebar = $('#sidebar');
 var $mapHelp = $("#map-help");
 var $endorseHelp = $("#endorsement-process");
 
 $(document).ready( function() {
   var defaultText =$("#template-default-text").html();
-  var sourcebox = $("#template-infobox").html();
+  var sourcebox = $("#senate-template-infobox").html();
   var endorseText = $("#template-endorse-text").html();
   app.infoboxTemplate = Handlebars.compile(sourcebox);
-  app.defaultTemplate = Handlebars.compile(defaultText);
-  app.endorseTemplate = Handlebars.compile(endorseText);
+//  app.defaultTemplate = Handlebars.compile(defaultText);
+//  app.endorseTemplate = Handlebars.compile(endorseText);
   Tabletop.init( { key: public_spreadsheet_url,
     callback: showInfo,
     parseNumbers: true } );
 });
 
 function showInfo(data, tabletop) {
-  $.each( tabletop.sheets("MDLCV 2014 Endorsements").all(), function(i, member) {
-    MDHouseDistricts[member.district] = member;
+  $.each( tabletop.sheets("Sheet1").all(), function(i, member) {
+    NCDistricts[member.district] = member;
   });
   loadGeo();
 }
@@ -43,29 +42,29 @@ var remapColor = function(color) {
 }
 
 var geoStyle = function(data) {
-  var sldlst = data.properties.SLDLST;
-  sldlst = sldlst.replace(/^0+/, '');
-  var houseDistrict = MDHouseDistricts[sldlst];
+  var sldust = data.properties.SLDUST;
+  sldust = sldust.replace(/^0+/, '');
+  //var houseDistrict = NCDistricts[sldust];
   var color = 'white';
-  if(houseDistrict) {
-    color = remapColor(houseDistrict.colormethod);
+  //if(houseDistrict) {
+  //  color = remapColor(houseDistrict.colormethod);
 //    color='#0B8973';
-  }
+ // }
 
   return {
     fillColor: color,
-    weight: 1,
+    weight: 2,
     opacity: 0.3,
-    color: '#555555',
+    color: '#666',
     dashArray: '0',
-    fillOpacity:1
+    fillOpacity:.7
   }
 };
 
 function loadGeo(district) {
   L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
     maxZoom: 17,
-    minZoom:8,
+    minZoom:7,
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
       '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
       'Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -73,12 +72,12 @@ function loadGeo(district) {
   }).addTo(map);
   //'examples.map-9ijuk24y'
 
-  houseLayer = L.geoJson(mdHouse, {
+  Layer = L.geoJson(ncSenate, {
     onEachFeature:onEachFeature,
     style: geoStyle
   });
 
-  houseLayer.addTo(map);
+  Layer.addTo(map);
 }
 
 function onEachFeature(feature, layer) {
@@ -92,9 +91,9 @@ function onEachFeature(feature, layer) {
 
 function highlightFeature(e) {
   var layer = e.target;
-  var districtNumber = layer.feature.properties.SLDLST;
+  var districtNumber = layer.feature.properties.SLDUST;
   districtNumber = districtNumber.replace(/^0+/, '');
-  var memberDetail = MDHouseDistricts[districtNumber];
+  var memberDetail = NCDistricts[districtNumber];
   if(!memberDetail){
     return;
   }
@@ -125,8 +124,7 @@ function resetHighlight(e) {
 
   info.update();
   var layer = e.target;
-//  houseLayer.resetStyle(layer);
-  houseLayer.resetStyle(layer);
+  Layer.resetStyle(layer);
   info.update();
   if (!freeze) {
     clearInfobox(e);
@@ -137,19 +135,18 @@ function resetHighlight(e) {
 
 function clearInfobox() {
   $sidebar.html(' ');
-  styleDistrict(frozenDist,1,0.3,'#666',1);
+  styleDistrict(frozenDist,1,0.3,'#ffffff',.7);
 }
 
-function styleDistrict(whichDist, weight, opacity, color, fillOpacity) {
+function styleDistrict(whichDist, weight, opacity, fillColor, fillOpacity) {
   if (typeof frozenDist == 'object' && freeze) {
-    var frozenDistrictNumber = frozenDist.target.feature.properties.SLDLST.replace(/^0+/, '');
-    var frozenDistrictDetail = MDHouseDistricts[frozenDistrictNumber];
-    frozenDist.target.setStyle({
-      fillColor: remapColor(frozenDistrictDetail.colormethod),
+    var frozenDistrictNumber = whichDist.target.feature.properties.SLDUST.replace(/^0+/, '');
+    var frozenDistrictDetail = NCDistricts[frozenDistrictNumber];
+    whichDist.target.setStyle({
+      fillColor: fillColor, //remapColor(frozenDistrictDetail.colormethod),
       weight: weight,
       opacity: opacity,
-      color: color,
-//      dashArray: '0',
+//      color: color,
       fillOpacity:fillOpacity
     })
   }
@@ -161,11 +158,11 @@ function mapMemberDetailClick(e) {
   }
   freeze=1;
   var boundary = e.target;
-  var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
-  var districtDetail = MDHouseDistricts[districtNumber];
+  var districtNumber = boundary.feature.properties.SLDUST.replace(/^0+/, '');
+  var districtDetail = NCDistricts[districtNumber];
   var member = memberDetailFunction(districtNumber);
   if (twoClicksAgo) {
-   houseLayer.resetStyle(twoClicksAgo.target);
+   Layer.resetStyle(twoClicksAgo.target);
   }
   boundary.setStyle({
     weight: 5,
@@ -177,7 +174,7 @@ function mapMemberDetailClick(e) {
 }
 
 function memberDetailFunction(districtNumber){
-  var districtDetail = MDHouseDistricts[districtNumber];
+  var districtDetail = NCDistricts[districtNumber];
   // 1. Build Template for the information box from districtDetails attributes.
   var html = app.infoboxTemplate(districtDetail);
   // 2. Insert the rendered template into #sidebar
@@ -186,7 +183,7 @@ function memberDetailFunction(districtNumber){
 
 function mapDblClick(e) {
   var layer = e.target;
-  var districtNumber = layer.feature.properties.SLDLST;
+  var districtNumber = layer.feature.properties.SLDUST;
   districtNumber = districtNumber.replace(/^0+/, '');
   var bbox = layer.getBounds();
   map.fitBounds(bbox);
@@ -227,5 +224,5 @@ $endorseHelp.click(function() {
 $(document).on("click",".close",function(event) {
   event.preventDefault();
   clearInfobox();
-  freeze=0;
+    freeze=0;
 });
