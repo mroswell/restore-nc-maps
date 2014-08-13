@@ -64,7 +64,7 @@ button {font: bold 0.9em arial,verdana,helvetica,sans-serif;}
     border: solid black 1px;
     padding: 17px;
     background: white;
-    line-height: 1.1;
+    line-height: 1.22;
 }
 
 .entry-infobox a, .entry-default-text a {color: #0B8973;}
@@ -80,6 +80,7 @@ button {font: bold 0.9em arial,verdana,helvetica,sans-serif;}
     margin-bottom: 0;
 }
 
+p.info-title {font-size: 120%;}
 .entry-infobox img {border: red 1px; display:block;  text-align: center;}
 
 h2 {
@@ -118,7 +119,7 @@ p.close {margin-top: -4px;margin-right: -8px; }
     text-align: left;
     margin-bottom: 8px;
     font-weight: bold;
-    font-size: 90%;
+    font-size: 94%;
 }
 .my-legend .legend-scale ul {
     margin: 0;

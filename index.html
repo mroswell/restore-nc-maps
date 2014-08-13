@@ -36,7 +36,21 @@
           <span class="pull-right">
         <a target='_new' href="http://twitter.com/intent/tweet?text=sample+encoded+tweet+here"><i class="icon-twitter icon custom-icon"></i></a>&nbsp;&nbsp;<a  target='_new' href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2FrestoreNC.org&t=Restore+North+Carolina"><i class="icon-facebook  custom-icon"></i></a>
       </span>
-          <br><small>Blurb about the map goes here</small></h2>
+          <br><small>Competitive Scale</small></h2>
+
+        <div class='my-legend'>
+            <!--div class='legend-title'>Legend:</div-->
+            <div class='legend-scale'>
+                <ul class='legend-labels' style='text-align:center'>
+                    <li><span style='background:rgba(255, 0, 0, 0.70)'></span>Republican</li>
+                    <li><span style='background:rgba(234, 86, 106, 0.70)'></span>Leaning Republican</li>
+                    <li><span style='background:rgba(213, 172, 213, 0.70)'></span>Toss-up</li>
+                    <li><span style='background:rgba(109, 146, 201, 0.71)'></span>Leaning Democratic</li>
+                    <li><span style='background:rgba(6, 120, 190, 0.71)'></span>Democratic</li>
+                </ul>
+            </div>
+            <!--<div class='legend-source'>Source: <a href="#link to source">Name of source</a></div>-->
+        </div>
     </div>
     <div class="row" style="margin-left:-30px;">
       <div id="sidebar" class="col-xs-3 default-text">
@@ -45,17 +59,11 @@
             <!--<p id='close2' class='close'>&times;</p><br>-->
             <h5 style="text-align: center">Welcome</h5>
             <ul>
-              <li>Mouseover a district for more detail</li>
-              <li>Visit the Blurb page for more details</li>
+              <li><strong>Mouseover</strong> a district for more detail</li>
+              <li><strong>Click a district</strong> to freeze the info panel</li>
+                <li><strong>Zoom</strong> into selected district to see street detail</li>
+                <li><strong>Click the 'x'</strong> to dismiss the info panel and re-enable mouseover function.</li></li>
             </ul>
-              <!--div class='my-legend'>
-                <div class='legend-scale'>
-                  <ul class='legend-labels' style='text-align:center'>
-                    <li><span style='background:#fff4c1'></span>State-wide candidates only</li>
-                    <li><span style='background:#85c4b9'></span>State-wide and legislative candidates</li>
-                  </ul>
-                </div>
-              </div-->
         </div>
         </div>
 
@@ -118,7 +126,7 @@
         <div class="entry-infobox" style="padding-top:9px;">
             <div class="body">
                 <p  id='close' class='close'>&times;</p><br>
-                <strong>Senate District {{{district}}}</strong><br>
+                <p class="info-title"><strong>Senate District {{{district}}}</strong></p>
                 <p class="entry-header">District Scores</p>
                 <strong>DPI: </strong>{{{dpi}}}<br>
                <strong>Competitive Scale</strong> {{{competitivescale}}<br>
@@ -132,10 +140,6 @@
             </div>
         </div>
     </script>
-
-
-  <!-- /container -->
 </div>
 <div class="clear"></div>
-
 </body></html>
