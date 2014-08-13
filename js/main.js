@@ -34,12 +34,12 @@ function showInfo(data, tabletop) {
 }
 
 function getColor(score) {
-    return score == '5' ? 'rgb(255, 0, 0)' :
+    return score == '1' ? 'rgb(255, 0, 0)' :
 //  score == '4'  ? 'rgb(234,86,106)' :
-    score == '4'  ? 'rgb(229,103,127)' :
+    score == '2'  ? 'rgb(229,103,127)' :
     score == '3'   ? 'rgb(213,172,213)' :
-    score == '2'   ? 'rgb(109,146,201)' :
-    score == '1'   ? 'rgb(6, 120, 190)' :
+    score == '4'   ? 'rgb(109,146,201)' :
+    score == '5'   ? 'rgb(6, 120, 190)' :
       'rgb(165, 255, 38)';
 }
 //
