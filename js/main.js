@@ -33,26 +33,33 @@ function showInfo(data, tabletop) {
   loadGeo();
 }
 
-// Remap the color from the spreadsheet to a more desirable color
-var remapColor = function(color) {
-  if (color =="#FFFFBF") {
-    color= '#fff4c1';
-  }
-  return color;
+function getColor(score) {
+    return score == '5' ? 'rgb(255, 0, 0)' :
+//  score == '4'  ? 'rgb(234,86,106)' :
+    score == '4'  ? 'rgb(229,103,127)' :
+    score == '3'   ? 'rgb(213,172,213)' :
+    score == '2'   ? 'rgb(109,146,201)' :
+    score == '1'   ? 'rgb(6, 120, 190)' :
+      'rgb(165, 255, 38)';
 }
+//
+//function getColor(score) {
+//    return score == '5' ? 'rgb(255, 0, 0)' :
+//        score == '4'  ? 'rgb(226, 70, 99)' :
+//            score == '3'   ? 'rgb(198, 141, 198)' :
+//                score == '2'   ? 'rgb(99, 70, 226)' :
+//                    score == '1'   ? 'rgb(0, 0, 255)' :
+//                        'rgb(165, 0, 38)';
+//}
+
 
 var geoStyle = function(data) {
   var sldust = data.properties.SLDUST;
   sldust = sldust.replace(/^0+/, '');
-  //var houseDistrict = NCDistricts[sldust];
-  var color = 'white';
-  //if(houseDistrict) {
-  //  color = remapColor(houseDistrict.colormethod);
-//    color='#0B8973';
- // }
+  var fillColor = getColor(NCDistricts[sldust].competitivescale.toString());
 
   return {
-    fillColor: color,
+    fillColor: fillColor,
     weight: 2,
     opacity: 0.3,
     color: '#666',
@@ -143,7 +150,7 @@ function styleDistrict(whichDist, weight, opacity, fillColor, fillOpacity) {
     var frozenDistrictNumber = whichDist.target.feature.properties.SLDUST.replace(/^0+/, '');
     var frozenDistrictDetail = NCDistricts[frozenDistrictNumber];
     whichDist.target.setStyle({
-      fillColor: fillColor, //remapColor(frozenDistrictDetail.colormethod),
+      fillColor: getColor(frozenDistrictDetail.competitivescale),
       weight: weight,
       opacity: opacity,
 //      color: color,
