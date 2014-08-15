@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>   <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>     <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>     <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-gb" lang="en-gb" dir="ltr">-->
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="content-language" content="en">
+  <title>Restore NC Interactive Map | We love North Carolina! Don't let the Tea Party deny our rights or destroy our traditions.</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta property="og:title" content="Restore NC Senate Map">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/share.png">
+  <meta property="og:description" content="">
+  <script src="node_modules/leaflet/dist/leaflet.js"></script>
+  <script type="text/javascript" src="js/vendor/handlebars.js"></script>
+  <script src="maps/nc_sldl13.js"></script>
+  <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="">
+  <link rel="shortcut icon" href="http://www.restorenc.org/misc/favicon.ico" type="image/vnd.microsoft.icon" />
+  <link rel="stylesheet" href="css/bootstrap-cleaned.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="node_modules/leaflet/dist/leaflet.css" />
+</head>
+
+<body>
+<div class="wrapper">
+  <!-- wides go inside wrapper but outside outer and inner -->
+  <div class="container">
+    <div class="row col-xs-12">
+      <h2>RestoreNC Senate Map
+          <span class="pull-right">
+        <a target='_new' href="http://twitter.com/intent/tweet?text=sample+encoded+tweet+here"><i class="icon-twitter icon custom-icon"></i></a>&nbsp;&nbsp;<a  target='_new' href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2FrestoreNC.org&t=Restore+North+Carolina"><i class="icon-facebook  custom-icon"></i></a>
+      </span>
+          <br><small>Competitive Scale</small></h2>
+
+        <div class='my-legend'>
+            <!--div class='legend-title'>Legend:</div-->
+            <div class='legend-scale'>
+                <ul class='legend-labels' style='text-align:center'>
+                    <li><span style='background:rgba(255, 0, 0, 0.70)'></span>Republican</li>
+                    <li><span style='background:rgba(234, 86, 106, 0.70)'></span>Leaning Republican</li>
+                    <li><span style='background:rgba(213, 172, 213, 0.70)'></span>Toss-up</li>
+                    <li><span style='background:rgba(109, 146, 201, 0.71)'></span>Leaning Democratic</li>
+                    <li><span style='background:rgba(6, 120, 190, 0.71)'></span>Democratic</li>
+                </ul>
+            </div>
+            <!--<div class='legend-source'>Source: <a href="#link to source">Name of source</a></div>-->
+        </div>
+    </div>
+    <div class="row" style="margin-left:-30px;">
+      <div id="sidebar" class="col-xs-3 default-text">
+        <div class="entry-default-text" style="padding-top:9px; display:block;">
+          <div id=default-text class="body">
+            <!--<p id='close2' class='close'>&times;</p><br>-->
+            <h5 style="text-align: center">Welcome</h5>
+            <ul>
+              <li><strong>Mouseover</strong> a district for more detail</li>
+              <li><strong>Click a district</strong> to freeze the info panel</li>
+                <li><strong>Zoom</strong> into selected district to see street detail</li>
+                <li><strong>Click the 'x'</strong> to dismiss the info panel and re-enable mouseover function.</li></li>
+            </ul>
+        </div>
+        </div>
+
+      </div>
+      <div id="map" class="col-xs-9">
+      </div>
+    </div>
+    <div class="row">
+      <div id="content"></div>
+    </div>
+  </div><!-- /container -->
+
+  <!--[if lt IE 7]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="js/main-house.js"></script>
+  <script type="text/javascript" src="js/vendor/tabletop.js"></script>
+  <script id="template-default-text" type="text/x-handlebars-template">
+    <div class="entry-default-text" style="padding-top:9px;">
+      <div class="body">
+        <!--<p id='close1' class='close'>&times;</p><br>-->
+        <h5 style="text-align: center">Map Help</h5>
+        <ul>
+          <li>Don't know what district you live in? <a target="_blank" href="https://voterservices.elections.maryland.gov/VoterSearch">Click here.</a></li>
+          <li><strong>Mouse over</strong> districts to view district detail and see streets</li>
+          <li><strong>Zoom, then mouse over</strong> to see streets more clearly</li>
+          <li><strong>Click a district</strong> to freeze the info panel</li>
+          <li><strong>Click the 'x'</strong> to dismiss the info panel and re-enable mouseover function.</li>
+          <li><strong>Double-click a district</strong> to zoom in</li>
+        </ul>
+        <!--div class="row" style="text-align: center; margin:auto">
+          <div class='my-legend'>
+            <div class='legend-scale'>
+              <ul class='legend-labels' style='text-align:center'>
+                <li><span style='background:#fff4c1'></span>State-wide candidates only</li>
+                <li><span style='background:#85c4b9'></span>State-wide and legislative candidates</li>
+              </ul>
+            </div>
+          </div>
+        </div-->
+      </div>
+    </div>
+  </script>
+
+  <script id="template-endorse-text" type="text/x-handlebars-template">
+    <div class="entry-default-text" style="padding-top:9px;">
+      <div class="body">
+        <!--<p id='close1' class='close'>&times;</p><br>-->
+        <h5 style="text-align: center">Our Process</h5>
+  <p>use this to detail process</p></div>
+    </div>
+  </script>
+
+    <script id="senate-template-infobox" type="text/x-handlebars-template">
+        <div class="entry-infobox" style="padding-top:9px;">
+            <div class="body">
+                <p  id='close' class='close'>&times;</p><br>
+                <p class="info-title"><strong>Senate District {{{district}}}</strong></p>
+                <p class="entry-header">District Scores</p>
+                <strong>DPI: </strong>{{{dpi}}}<br>
+               <strong>Competitive Scale</strong> {{{competitivenessscale}}<br>
+                <p class="entry-header">Counties Represented</p>
+                <em>{{{countiesrepresented}}}</em><br>
+                <p class="entry-header">Incumbent</p>
+                <strong> {{{fullname}}} ({{{party}}})</strong><br>
+                {{#if phone}}{{{phone}}}<br>{{/if}}
+                {{{notes}}}<br>
+                {{#if twitter}}<a  target='_new' href="http://twitter.com/{{{twitter}}}"><i class="icon-twitter icon-2x custom-icon"></i></a>{{/if}} {{#if facebook}} <a  target='_new' href="{{{facebook}}}"><i class="icon-facebook icon-2x custom-icon"></i></a> {{/if}}{{#if emailaddress}}<a  target='_new' href="mailto:{{{emailaddress}}}"><i class="icon-envelope icon-2x custom-icon"></i></a>{{/if}}
+            </div>
+        </div>
+    </script>
+</div>
+<div class="clear"></div>
+</body></html>

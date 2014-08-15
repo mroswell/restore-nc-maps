@@ -20,19 +20,15 @@ $(document).ready( function() {
   app.infoboxTemplate = Handlebars.compile(sourcebox);
 //  app.defaultTemplate = Handlebars.compile(defaultText);
 //  app.endorseTemplate = Handlebars.compile(endorseText);
-    var filename = window.location.pathname.split('/').pop();
-  if (filename === 'NC-house.html') {
-      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdFpTM09RWWdvWkthSVNza2J6WDNEZFE&output=html';
-  } else {
-      var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdEZfekJaQ09fOG41bUNzUU9GN29aMVE&output=html';
-  }
+  var filename = window.location.pathname.split('/').pop();
+  var public_spreadsheet_url = 'https://docs.google.com/spreadsheet/pub?key=0Ao3Ts9D8bHHpdFpTM09RWWdvWkthSVNza2J6WDNEZFE&output=html';
   Tabletop.init( { key: public_spreadsheet_url,
     callback: showInfo,
     parseNumbers: true } );
 });
 
 function showInfo(data, tabletop) {
-  $.each( tabletop.sheets("Sheet1").all(), function(i, member) {
+  $.each( tabletop.sheets("house").all(), function(i, member) {
     NCDistricts[member.district] = member;
   });
   loadGeo();
@@ -59,9 +55,9 @@ function getColor(score) {
 
 
 var geoStyle = function(data) {
-  var sldust = data.properties.SLDUST;
-  sldust = sldust.replace(/^0+/, '');
-  var fillColor = getColor(NCDistricts[sldust].competitivescale.toString());
+  var sldlst = data.properties.SLDLST;
+  sldlst = sldlst.replace(/^0+/, '');
+  var fillColor = getColor(NCDistricts[sldlst].competitivescale.toString());
 
   return {
     fillColor: fillColor,
@@ -109,7 +105,7 @@ function onEachFeature(feature, layer) {
 
 function highlightFeature(e) {
   var layer = e.target;
-  var districtNumber = layer.feature.properties.SLDUST;
+  var districtNumber = layer.feature.properties.SLDLST;
   districtNumber = districtNumber.replace(/^0+/, '');
   var memberDetail = NCDistricts[districtNumber];
   if(!memberDetail){
@@ -158,7 +154,7 @@ function clearInfobox() {
 
 function styleDistrict(whichDist, weight, opacity, fillColor, fillOpacity) {
   if (typeof frozenDist == 'object' && freeze) {
-    var frozenDistrictNumber = whichDist.target.feature.properties.SLDUST.replace(/^0+/, '');
+    var frozenDistrictNumber = whichDist.target.feature.properties.SLDLST.replace(/^0+/, '');
     var frozenDistrictDetail = NCDistricts[frozenDistrictNumber];
     whichDist.target.setStyle({
       fillColor: getColor(frozenDistrictDetail.competitivescale),
@@ -176,7 +172,7 @@ function mapMemberDetailClick(e) {
   }
   freeze=1;
   var boundary = e.target;
-  var districtNumber = boundary.feature.properties.SLDUST.replace(/^0+/, '');
+  var districtNumber = boundary.feature.properties.SLDLST.replace(/^0+/, '');
   var districtDetail = NCDistricts[districtNumber];
   var member = memberDetailFunction(districtNumber);
   if (twoClicksAgo) {
@@ -201,7 +197,7 @@ function memberDetailFunction(districtNumber){
 
 function mapDblClick(e) {
   var layer = e.target;
-  var districtNumber = layer.feature.properties.SLDUST;
+  var districtNumber = layer.feature.properties.SLDLST;
   districtNumber = districtNumber.replace(/^0+/, '');
   var bbox = layer.getBounds();
   map.fitBounds(bbox);
